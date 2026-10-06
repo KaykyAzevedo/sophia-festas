@@ -85,6 +85,12 @@
               </div>
             </div>
             <div class="cal" id="cal"></div>
+            <div class="legend" aria-label="Legenda de preços">
+              <span><i class="dot weekday"></i>Seg–qui</span>
+              <span><i class="dot friday"></i>Sexta / véspera</span>
+              <span><i class="dot weekend"></i>Fim de semana / feriado</span>
+              <span><i class="dot holiday"></i>Feriado ★</span>
+            </div>
           </div>
 
           <div class="panel metal-frame">
@@ -105,12 +111,12 @@
             <div class="filters">
               <input id="f-search" placeholder="Buscar cliente...">
               <select id="f-status"><option value="">Todos os status</option><option>Confirmada</option><option>Pré-reserva</option><option>Cancelada</option></select>
-              <select id="f-space"><option value="">Todos os espaços</option></select>
+              <select id="f-pay"><option value="">Todos os pagamentos</option><option>Pendente</option><option>Sinal pago</option><option>Pago</option></select>
             </div>
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Data</th><th>Cliente</th><th>Evento</th><th>Espaço</th><th>Convidados</th><th>Valor</th><th>Status</th></tr></thead>
+              <thead><tr><th>Data</th><th>Cliente</th><th>Evento</th><th>Convidados</th><th>Valor</th><th>Pagamento</th><th>Status</th></tr></thead>
               <tbody id="tbody"></tbody>
             </table>
           </div>
@@ -123,34 +129,48 @@
   <div class="modal-bg" id="modal">
     <div class="modal metal-frame" role="dialog" aria-modal="true" aria-labelledby="m-title">
       <h3 id="m-title">Nova reserva</h3>
-      <p class="sub" id="m-sub">Preencha os dados do evento para bloquear a data.</p>
+      <p class="sub" id="m-sub">Preencha os dados para bloquear a data (casa única, uma reserva por dia).</p>
       <form class="form" id="booking-form">
         <input type="hidden" id="b-id">
         <div class="field"><label for="b-client">Cliente</label><input id="b-client" required placeholder="Nome completo"></div>
         <div class="field"><label for="b-phone">Telefone</label><input id="b-phone" placeholder="(00) 00000-0000"></div>
-        <div class="field"><label for="b-type">Tipo de evento</label>
-          <select id="b-type"><option>Aniversário</option><option>Infantil</option><option>15 anos</option><option>Casamento</option><option>Chá revelação</option><option>Corporativo</option><option>Outro</option></select>
-        </div>
-        <div class="field"><label for="b-space">Espaço</label><select id="b-space"></select></div>
-        <div class="field"><label for="b-date">Data</label><input id="b-date" type="date" required></div>
+        <div class="field"><label for="b-type">Tipo de evento</label><select id="b-type"></select></div>
+        <div class="field"><label for="b-date">Data da diária</label><input id="b-date" type="date" required></div>
         <div class="field" style="grid-template-columns:1fr 1fr;column-gap:.6rem">
           <label for="b-start" style="grid-column:1/-1">Horário</label>
-          <input id="b-start" type="time" value="19:00" required>
-          <input id="b-end" type="time" value="23:00" required aria-label="Término">
+          <input id="b-start" type="time" value="10:00" required>
+          <input id="b-end" type="time" value="18:00" required aria-label="Término">
         </div>
-        <div class="field"><label for="b-guests">Convidados</label><input id="b-guests" type="number" min="1" value="80"></div>
-        <div class="field"><label for="b-pkg">Pacote</label>
-          <select id="b-pkg"><option>Casulo</option><option selected>Asas</option><option>Voo Mágico</option><option>Personalizado</option></select>
+        <div class="field"><label for="b-guests">Convidados</label><input id="b-guests" type="number" min="1" value="50"></div>
+        <div class="field"><label for="b-extra">Horas adicionais</label><input id="b-extra" type="number" min="0" step="1" value="0"></div>
+        <div class="field full"><label>Opcionais</label><div class="opts" id="b-opts"></div></div>
+        <div class="field full">
+          <label class="check"><input type="checkbox" id="b-rules"> Cliente aceitou as regras da casa</label>
+        </div>
+
+        <div class="quote" id="b-quote" aria-live="polite"></div>
+
+        <div class="money">
+          <div class="field"><label for="b-value">Total (R$)</label><input id="b-value" type="number" min="0" step="any" value="0"></div>
+          <div class="field"><label for="b-deposit">Sinal pago (R$)</label><input id="b-deposit" type="number" min="0" step="any" value="0"></div>
+          <div class="field"><label for="b-pay">Pagamento</label>
+            <select id="b-pay"><option>Pendente</option><option>Sinal pago</option><option>Pago</option></select>
+          </div>
         </div>
         <div class="money">
-          <div class="field"><label for="b-value">Valor total (R$)</label><input id="b-value" type="number" min="0" step="50" value="8700"></div>
-          <div class="field"><label for="b-deposit">Sinal pago (R$)</label><input id="b-deposit" type="number" min="0" step="50" value="0"></div>
           <div class="field"><label for="b-status">Status</label>
             <select id="b-status"><option>Pré-reserva</option><option>Confirmada</option><option>Cancelada</option></select>
           </div>
+          <div class="field cash">
+            <label class="check"><input type="checkbox" id="b-cb-use"> Aplicar cashback</label>
+            <small id="b-cb-info"></small>
+          </div>
+          <div class="field"><button type="button" class="btn btn-ghost" id="b-recalc" style="display:none">Recalcular valor</button></div>
         </div>
-        <div class="field full"><label for="b-notes">Observações</label><textarea id="b-notes" placeholder="Tema, decoração, restrições alimentares..."></textarea></div>
+        <div class="field full"><label for="b-notes">Observações</label><textarea id="b-notes" placeholder="Tema, decoração, combinados..."></textarea></div>
         <div class="warn" id="b-warn"></div>
+        <div class="warn" id="b-dur"></div>
+        <div class="warn err" id="b-err" role="alert"></div>
         <div class="modal-actions">
           <button type="button" class="btn btn-danger" id="b-delete" style="display:none">Excluir</button>
           <button type="button" class="btn btn-ghost" id="b-cancel">Fechar</button>
@@ -162,6 +182,7 @@
 
   <script src="js/brand.js"></script>
   <script src="js/magic.js"></script>
+  <script src="js/config.js"></script>
   <script src="js/agenda.js"></script>
 </body>
 </html>

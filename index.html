@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sophia Festas</title>
-  <meta name="description" content="Sophia Festas — casa de festas onde cada celebração é uma transformação mágica.">
+  <title>Sophia Festas — Casa para alugar por diária</title>
+  <meta name="description" content="Sophia Festas — aluguel de casa por diária para festas, churrascos e confraternizações. Piscina, churrasqueira, som JBL e estrutura completa. Só o espaço, você faz a festa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -18,13 +18,16 @@
   <!-- NAVEGAÇÃO -->
   <nav class="nav">
     <a href="#inicio" class="nav-logo" data-logo="mark" aria-label="Início"></a>
-    <button class="nav-toggle" aria-label="Abrir menu"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
-      <li><a href="#essencia">Essência</a></li>
-      <li><a href="#espacos">Espaços</a></li>
-      <li><a href="#pacotes">Pacotes</a></li>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#essencia">A casa</a></li>
+      <li><a href="#diarias">Diárias</a></li>
+      <li><a href="#incluso">Incluso</a></li>
+      <li><a href="#opcionais">Opcionais</a></li>
+      <li><a href="#eventos">Eventos</a></li>
+      <li><a href="#regras">Regras</a></li>
       <li><a href="#galeria">Galeria</a></li>
-      <li><a href="#contato">Contato</a></li>
+      <li><a href="#contato">Orçamento</a></li>
       <li><a href="agenda.html" class="staff-link">Área da equipe</a></li>
     </ul>
   </nav>
@@ -35,18 +38,18 @@
     <div class="hero-ring"></div>
     <div class="hero-ring r2"></div>
     <div class="hero-inner">
-      <p class="eyebrow">Casa de Festas</p>
+      <p class="eyebrow">Casa para alugar por diária</p>
       <div data-logo="big"></div>
-      <p class="hero-tagline">Onde cada celebração ganha asas — um pequeno mundo mágico feito para os seus momentos mais especiais.</p>
+      <p class="hero-tagline">A casa é sua por um dia inteiro: piscina, churrasqueira e estrutura completa. Você traz a festa, nós cedemos o espaço.</p>
       <div class="hero-actions">
-        <a href="#contato" class="btn btn-primary">Reservar uma data</a>
-        <a href="#essencia" class="btn btn-ghost">Conhecer a casa</a>
+        <a href="#contato" class="btn btn-primary">Simular orçamento</a>
+        <a href="#diarias" class="btn btn-ghost">Ver diárias</a>
       </div>
     </div>
     <div class="scroll-hint">DESCUBRA</div>
   </header>
 
-  <!-- ESSÊNCIA / SIMBOLISMO -->
+  <!-- ESSÊNCIA -->
   <section id="essencia">
     <div class="container symbol-grid">
       <div class="symbol-art reveal">
@@ -55,112 +58,97 @@
         <div class="big-fly" data-butterfly></div>
       </div>
       <div class="reveal">
-        <p class="eyebrow">Nossa essência</p>
-        <h2 class="section-title">A borboleta e a <em>arte de transformar</em></h2>
-        <p class="lead" style="margin:0">A borboleta é o símbolo da Sophia. Ela nos lembra que toda festa marca uma passagem — um novo ano de vida, uma união, uma conquista. Assim como ela, cada celebração nasce de um cuidado silencioso e se revela, no grande dia, em pura beleza.</p>
+        <p class="eyebrow">A casa</p>
+        <h2 class="section-title">Um espaço só seu, <em>do jeito que você imaginou</em></h2>
+        <p class="lead" style="margin:0">A Sophia é uma casa de lazer alugada por diária — apenas o espaço, sem serviço de festa. Você escolhe a data, organiza o seu evento com quem quiser e aproveita 8 horas com toda a estrutura à disposição, em um ambiente reservado para o seu grupo.</p>
 
         <div class="stages">
           <div class="stage">
             <div class="stage-icon metal-frame">I</div>
-            <div><h4>O sonho</h4><p>Ouvimos sua história e desenhamos juntos a festa que você imaginou.</p></div>
+            <div><h4>Escolha a data</h4><p>Simule o valor aqui no site e confirme a disponibilidade pelo WhatsApp.</p></div>
           </div>
           <div class="stage">
             <div class="stage-icon metal-frame">II</div>
-            <div><h4>O casulo</h4><p>Nos bastidores, cada detalhe é preparado com delicadeza e precisão.</p></div>
+            <div><h4>Reserve a casa</h4><p>Combine os detalhes com a gente e traga a sua decoração, comida e atrações.</p></div>
           </div>
           <div class="stage">
             <div class="stage-icon metal-frame">III</div>
-            <div><h4>O voo</h4><p>O grande dia chega e o seu momento ganha asas — leve, inesquecível.</p></div>
+            <div><h4>Aproveite</h4><p>8 horas de casa inteira para você e seus convidados. Ganhe 10% de cashback no próximo evento.</p></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ESPAÇOS -->
-  <section id="espacos">
+  <!-- DIÁRIAS -->
+  <section id="diarias">
     <div class="container center">
-      <p class="eyebrow reveal">Nossos ambientes</p>
-      <h2 class="section-title reveal">Espaços pensados para <em>encantar</em></h2>
-      <p class="lead reveal">Ambientes que se adaptam ao seu evento, com iluminação cênica em tons de azul e acabamentos em prata.</p>
+      <p class="eyebrow reveal">Diárias</p>
+      <h2 class="section-title reveal">Valores <em>transparentes</em></h2>
+      <p class="lead reveal">O valor depende do dia da semana. Todas as diárias incluem 8 horas de festa.</p>
 
-      <div class="spaces">
-        <article class="space-card metal-frame reveal">
-          <div class="space-img"><div class="ph ph-1"></div><span class="ph-label">FOTO DO SALÃO</span></div>
-          <div class="space-body">
-            <h3>Salão Azul Noturno</h3>
-            <p>O coração da casa: pé-direito alto, céu estrelado no teto e pista iluminada.</p>
-            <div class="space-meta"><span>✦ até 180 convidados</span><span>✦ 320 m²</span></div>
-          </div>
-        </article>
-        <article class="space-card metal-frame reveal">
-          <div class="space-img"><div class="ph ph-2"></div><span class="ph-label">FOTO DO JARDIM</span></div>
-          <div class="space-body">
-            <h3>Jardim das Borboletas</h3>
-            <p>Área externa com luzes suspensas, ideal para cerimônias e coquetéis ao entardecer.</p>
-            <div class="space-meta"><span>✦ até 120 convidados</span><span>✦ 250 m²</span></div>
-          </div>
-        </article>
-        <article class="space-card metal-frame reveal">
-          <div class="space-img"><div class="ph ph-3"></div><span class="ph-label">FOTO DO LOUNGE</span></div>
-          <div class="space-body">
-            <h3>Lounge Prata</h3>
-            <p>Espaço intimista para aniversários menores, chás e comemorações em família.</p>
-            <div class="space-meta"><span>✦ até 60 convidados</span><span>✦ 110 m²</span></div>
-          </div>
-        </article>
+      <div class="rates">
+        <div class="rate metal-frame reveal">
+          <h3>Segunda a quinta</h3>
+          <p class="rate-price metal-text">R$ 750,00</p>
+          <p class="rate-sub">por diária</p>
+        </div>
+        <div class="rate featured metal-frame reveal">
+          <h3>Sexta e véspera de feriado</h3>
+          <p class="rate-price metal-blue-text">R$ 1.000,00</p>
+          <p class="rate-sub">por diária</p>
+        </div>
+        <div class="rate metal-frame reveal">
+          <h3>Sábados, domingos, feriados e datas comemorativas</h3>
+          <p class="rate-price metal-text">R$ 1.500,00</p>
+          <p class="rate-sub">por diária</p>
+        </div>
       </div>
+
+      <ul class="terms reveal">
+        <li><strong>8 horas de festa</strong> incluídas na diária.</li>
+        <li><strong>Hora adicional:</strong> 10% do valor da diária, mediante disponibilidade.</li>
+        <li><strong>Taxa de limpeza:</strong> R$ 150,00, cobrada à parte.</li>
+        <li><strong>Cashback:</strong> 10% de desconto para o seu próximo evento.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- PACOTES -->
-  <section id="pacotes">
+  <!-- O QUE ESTÁ INCLUSO -->
+  <section id="incluso">
     <div class="container center">
-      <p class="eyebrow reveal">Pacotes</p>
-      <h2 class="section-title reveal">Escolha o seu <em>encanto</em></h2>
-      <p class="lead reveal">Valores ilustrativos. Cada pacote pode ser personalizado conforme o seu sonho.</p>
+      <p class="eyebrow reveal">Tudo à disposição</p>
+      <h2 class="section-title reveal">O que está incluso <em>na diária</em></h2>
+      <p class="lead reveal">Piscina grande e área externa com medidas <strong class="tbc">a confirmar</strong>.</p>
+      <ul class="check-grid reveal" id="included-list"></ul>
+    </div>
+  </section>
 
-      <div class="packages">
-        <div class="pkg metal-frame reveal">
-          <h3>CASULO</h3>
-          <p class="pkg-sub">delicado e acolhedor</p>
-          <p class="pkg-price metal-text">R$ 4.900 <small>/ 4h</small></p>
-          <ul>
-            <li>Lounge Prata para até 60 pessoas</li>
-            <li>Decoração temática essencial</li>
-            <li>Buffet de salgados e doces</li>
-            <li>Equipe de recepção</li>
-          </ul>
-          <a href="#contato" class="btn btn-ghost" data-pkg="Casulo">Solicitar orçamento</a>
-        </div>
-        <div class="pkg featured metal-frame reveal">
-          <span class="pkg-badge">MAIS ESCOLHIDO</span>
-          <h3>ASAS</h3>
-          <p class="pkg-sub">o equilíbrio perfeito</p>
-          <p class="pkg-price metal-blue-text">R$ 8.700 <small>/ 5h</small></p>
-          <ul>
-            <li>Salão Azul Noturno para até 120 pessoas</li>
-            <li>Decoração personalizada com iluminação cênica</li>
-            <li>Buffet completo + bebidas</li>
-            <li>DJ e pista de dança</li>
-            <li>Coordenação do evento</li>
-          </ul>
-          <a href="#contato" class="btn btn-primary" data-pkg="Asas">Solicitar orçamento</a>
-        </div>
-        <div class="pkg metal-frame reveal">
-          <h3>VOO MÁGICO</h3>
-          <p class="pkg-sub">a experiência completa</p>
-          <p class="pkg-price metal-text">R$ 14.500 <small>/ 6h</small></p>
-          <ul>
-            <li>Casa inteira para até 180 pessoas</li>
-            <li>Cenografia exclusiva e efeitos especiais</li>
-            <li>Buffet premium + open bar</li>
-            <li>Foto e vídeo</li>
-            <li>Cerimonialista dedicada</li>
-          </ul>
-          <a href="#contato" class="btn btn-ghost" data-pkg="Voo Mágico">Solicitar orçamento</a>
-        </div>
-      </div>
+  <!-- OPCIONAIS -->
+  <section id="opcionais">
+    <div class="container center">
+      <p class="eyebrow reveal">Opcionais</p>
+      <h2 class="section-title reveal">Quer ir <em>além</em>?</h2>
+      <p class="lead reveal">Itens extras, todos com valor sob consulta.</p>
+      <div class="optionals" id="optionals-list"></div>
+    </div>
+  </section>
+
+  <!-- TIPOS DE EVENTO -->
+  <section id="eventos">
+    <div class="container center">
+      <p class="eyebrow reveal">Eventos</p>
+      <h2 class="section-title reveal">Para todo tipo de <em>ocasião</em></h2>
+      <ul class="chips reveal" id="events-list"></ul>
+    </div>
+  </section>
+
+  <!-- REGRAS -->
+  <section id="regras">
+    <div class="container center">
+      <p class="eyebrow reveal">Regras da casa</p>
+      <h2 class="section-title reveal">Para todos <em>aproveitarem bem</em></h2>
+      <ul class="rules metal-frame reveal" id="rules-list"></ul>
     </div>
   </section>
 
@@ -168,39 +156,15 @@
   <section id="galeria">
     <div class="container center">
       <p class="eyebrow reveal">Galeria</p>
-      <h2 class="section-title reveal">Momentos que <em>levantaram voo</em></h2>
+      <h2 class="section-title reveal">Conheça o <em>espaço</em></h2>
+      <p class="lead reveal">Fotos reais em breve.</p>
       <div class="gallery reveal">
-        <div class="g tall ph-4"><span class="ph-label">ANIVERSÁRIO</span></div>
-        <div class="g wide ph-2"><span class="ph-label">CASAMENTO</span></div>
-        <div class="g ph-5"><span class="ph-label">15 ANOS</span></div>
-        <div class="g ph-6"><span class="ph-label">CHÁ REVELAÇÃO</span></div>
-        <div class="g ph-1"><span class="ph-label">INFANTIL</span></div>
-        <div class="g ph-3"><span class="ph-label">CORPORATIVO</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos">
-    <div class="container center">
-      <p class="eyebrow reveal">Depoimentos</p>
-      <h2 class="section-title reveal">O que dizem sobre a <em>magia</em></h2>
-      <div class="quotes">
-        <blockquote class="quote metal-frame reveal">
-          <div class="q-mark metal-blue-text">“</div>
-          <p>Parecia que estávamos dentro de um conto de fadas. Cada detalhe em azul e prata estava perfeito.</p>
-          <div class="who">Cliente · Casamento</div>
-        </blockquote>
-        <blockquote class="quote metal-frame reveal">
-          <div class="q-mark metal-blue-text">“</div>
-          <p>Os 15 anos da minha filha foram mágicos. A equipe cuidou de tudo com muito carinho.</p>
-          <div class="who">Cliente · 15 anos</div>
-        </blockquote>
-        <blockquote class="quote metal-frame reveal">
-          <div class="q-mark metal-blue-text">“</div>
-          <p>As crianças ficaram encantadas com as borboletas. Uma festa leve, linda e organizada.</p>
-          <div class="who">Cliente · Infantil</div>
-        </blockquote>
+        <div class="g tall ph-4"><span class="ph-label">FOTO: PISCINA</span></div>
+        <div class="g wide ph-2"><span class="ph-label">FOTO: ÁREA EXTERNA</span></div>
+        <div class="g ph-5"><span class="ph-label">FOTO: CHURRASQUEIRA</span></div>
+        <div class="g ph-6"><span class="ph-label">FOTO: SINUCA E TOTÓ</span></div>
+        <div class="g ph-1"><span class="ph-label">FOTO: ÁREA DE DECORAÇÃO</span></div>
+        <div class="g ph-3"><span class="ph-label">FOTO: FACHADA</span></div>
       </div>
     </div>
   </section>
@@ -209,68 +173,162 @@
   <section id="contato">
     <div class="container">
       <div class="center">
-        <p class="eyebrow reveal">Contato</p>
-        <h2 class="section-title reveal">Vamos criar a sua <em>transformação</em>?</h2>
-        <p class="lead reveal">Conte um pouco sobre o seu evento e nossa equipe retorna em até 24 horas.</p>
+        <p class="eyebrow reveal">Orçamento</p>
+        <h2 class="section-title reveal">Simule e <em>reserve a sua data</em></h2>
+        <p class="lead reveal">Preencha o pedido: ele será enviado pronto para o nosso WhatsApp, onde confirmamos a disponibilidade.</p>
       </div>
 
       <div class="contact-grid">
         <aside class="contact-info metal-frame reveal">
           <div class="info-row">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-            <div><small>Endereço</small>Rua das Borboletas, 123 — Sua cidade</div>
+            <div><small>Endereço</small><span class="tbc">A confirmar</span></div>
           </div>
           <div class="info-row">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
-            <div><small>WhatsApp</small>(00) 90000-0000</div>
-          </div>
-          <div class="info-row">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
-            <div><small>E-mail</small>contato@sophiafestas.com.br</div>
+            <div><small>WhatsApp</small><a href="#" id="info-wa">(00) 90000-0000</a></div>
           </div>
           <div class="info-row">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-            <div><small>Visitas</small>Terça a sábado · 10h às 19h</div>
+            <div><small>Visitas</small>Combine pelo WhatsApp</div>
           </div>
         </aside>
 
-        <form class="form metal-frame reveal" id="quote-form">
-          <div class="field"><label for="q-name">Seu nome</label><input id="q-name" required placeholder="Como podemos te chamar?"></div>
-          <div class="field"><label for="q-phone">WhatsApp</label><input id="q-phone" required placeholder="(00) 00000-0000"></div>
-          <div class="field"><label for="q-type">Tipo de evento</label>
-            <select id="q-type"><option>Aniversário</option><option>Infantil</option><option>15 anos</option><option>Casamento</option><option>Chá revelação</option><option>Corporativo</option><option>Outro</option></select>
-          </div>
-          <div class="field"><label for="q-date">Data desejada</label><input id="q-date" type="date"></div>
-          <div class="field"><label for="q-guests">Convidados</label><input id="q-guests" type="number" min="1" placeholder="Ex.: 80"></div>
-          <div class="field"><label for="q-pkg">Pacote</label>
-            <select id="q-pkg"><option>Ainda não sei</option><option>Casulo</option><option>Asas</option><option>Voo Mágico</option></select>
-          </div>
-          <div class="field full"><label for="q-msg">Conte seu sonho</label><textarea id="q-msg" placeholder="Tema, cores, ideias..."></textarea></div>
-          <div class="full"><button class="btn btn-primary" type="submit">Enviar pedido</button></div>
+        <form class="form metal-frame reveal" id="quote-form" novalidate>
+          <div class="field"><label for="q-name">Seu nome</label><input id="q-name" required autocomplete="name" placeholder="Como podemos te chamar?"></div>
+          <div class="field"><label for="q-phone">WhatsApp</label><input id="q-phone" required type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000"></div>
+          <div class="field"><label for="q-date">Data desejada</label><input id="q-date" type="date" required></div>
+          <div class="field"><label for="q-type">Tipo de evento</label><select id="q-type"></select></div>
+          <div class="field"><label for="q-extra">Horas adicionais</label><input id="q-extra" type="number" min="0" max="8" step="1" value="0" inputmode="numeric"></div>
+          <fieldset class="field full opts">
+            <legend>Opcionais (valor sob consulta)</legend>
+            <div id="q-opts"></div>
+          </fieldset>
+          <div class="field full"><label for="q-msg">Mensagem</label><textarea id="q-msg" placeholder="Conte um pouco sobre o seu evento..."></textarea></div>
+
+          <div class="full estimate" id="q-estimate" aria-live="polite"></div>
+
+          <label class="full check-line"><input type="checkbox" id="q-rules" required> <span>Li e aceito as <a href="#regras">regras da casa</a>.</span></label>
+          <p class="full form-error" id="q-error" role="alert" hidden></p>
+          <div class="full"><button class="btn btn-primary" type="submit">Enviar pelo WhatsApp</button></div>
         </form>
       </div>
     </div>
   </section>
 
   <footer>
-    <p class="foot-quote">“Toda festa é uma pequena metamorfose.”</p>
     <div data-logo="mark"></div>
     <p>© 2026 Sophia Festas · Protótipo visual · <a href="agenda.html" style="color:var(--blue-soft)">Área da equipe</a></p>
   </footer>
 
+  <!-- Balão flutuante do WhatsApp -->
+  <a class="wa-float" id="wa-float" href="#" target="_blank" rel="noopener" aria-label="Falar com a Sophia Festas pelo WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 3.5 3 6.5 6.500 6.500l1-1.600-2-1-.9.900c-1-.4-2-1.400-2.400-2.400l.9-.9-1-2z"/></svg>
+    <span class="wa-label">WhatsApp</span>
+  </a>
+
+  <script src="js/config.js"></script>
   <script src="js/brand.js"></script>
   <script src="js/magic.js"></script>
   <script>
-    // Pacote clicado preenche o formulário
-    document.querySelectorAll("[data-pkg]").forEach((b) =>
-      b.addEventListener("click", () => (document.getElementById("q-pkg").value = b.dataset.pkg))
-    );
-    // Protótipo: só simula o envio
-    document.getElementById("quote-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      e.target.reset();
-      showToast("Pedido enviado! Em breve nossa equipe entra em contato.");
-    });
+    (function () {
+      const S = window.SOPHIA;
+      const $ = (id) => document.getElementById(id);
+      const brl = (v) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      const brlText = (v) => brl(v).split(String.fromCharCode(160)).join(" "); // texto do WhatsApp sem espaço não separável
+      const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+      const waLink = (text) => "https://wa.me/" + S.WHATSAPP + "?text=" + encodeURIComponent(text);
+
+      // Listas vindas do config (fonte única)
+      $("included-list").innerHTML = S.INCLUDED.map((t) => "<li>" + esc(t) + "</li>").join("");
+      $("events-list").innerHTML = S.EVENT_TYPES.filter((t) => t !== "Outro").map((t) => "<li>" + esc(t) + "</li>").join("");
+      $("rules-list").innerHTML = S.RULES.map((t) => "<li>" + esc(t) + "</li>").join("");
+      $("optionals-list").innerHTML = S.OPTIONALS.map((o) =>
+        '<div class="opt-card metal-frame"><h3>' + esc(o.label) + "</h3><p>Valor sob consulta</p></div>").join("");
+      $("q-type").innerHTML = S.EVENT_TYPES.map((t) => "<option>" + esc(t) + "</option>").join("");
+      $("q-opts").innerHTML = S.OPTIONALS.map((o) =>
+        '<label class="check-line"><input type="checkbox" name="opt" value="' + esc(o.id) + '"> <span>' + esc(o.label) + "</span></label>").join("");
+
+      // WhatsApp: balão e contato
+      $("wa-float").href = waLink("Olá! Vim pelo site da Sophia Festas e gostaria de saber mais sobre o aluguel da casa.");
+      const digits = S.WHATSAPP.replace(/^55/, "");
+      $("info-wa").textContent = "(" + digits.slice(0, 2) + ") " + digits.slice(2, 7) + "-" + digits.slice(7);
+      $("info-wa").href = waLink("Olá! Gostaria de informações sobre o aluguel da casa.");
+
+      // Estimativa ao vivo
+      const form = $("quote-form");
+      const dateEl = $("q-date");
+      const todayStr = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+      dateEl.min = todayStr;
+      dateEl.max = S.HOLIDAYS_MAX; // a lista de feriados só cobre até aqui
+      const TIERS = { weekday: "segunda a quinta", friday: "sexta-feira", eve: "véspera de feriado", weekend: "fim de semana/feriado" };
+      function tierLabel(date) {
+        const tier = S.dayRate(date).tier;
+        if (tier !== "friday") return TIERS[tier];
+        const [y, m, d] = date.split("-").map(Number);
+        return new Date(y, m - 1, d).getDay() === 5 ? TIERS.friday : TIERS.eve;
+      }
+      const fmtDate = (s) => s.split("-").reverse().join("/");
+
+      function data() {
+        const extraHours = Math.min(8, Math.max(0, Math.floor(Number($("q-extra").value) || 0)));
+        const optionals = [...form.querySelectorAll('input[name="opt"]:checked')].map((c) => S.OPTIONALS.find((o) => o.id === c.value).label);
+        return { date: dateEl.value, extraHours, optionals };
+      }
+      function renderEstimate() {
+        const d = data();
+        if (!d.date) { $("q-estimate").innerHTML = "<p>Escolha uma data para ver a estimativa.</p>"; return; }
+        const q = S.quote(d), tier = tierLabel(d.date);
+        $("q-estimate").innerHTML =
+          '<h4>Estimativa</h4><dl>' +
+          "<dt>Diária (" + tier + ", " + S.HOURS_INCLUDED + "h)</dt><dd>" + brl(q.rate) + "</dd>" +
+          (d.extraHours ? "<dt>" + d.extraHours + " hora(s) adicional(is)</dt><dd>" + brl(q.extra) + "</dd>" : "") +
+          "<dt>Taxa de limpeza</dt><dd>" + brl(q.cleaning) + "</dd>" +
+          (d.optionals.length ? "<dt>Opcionais (" + esc(d.optionals.join(", ")) + ")</dt><dd>a consultar</dd>" : "") +
+          '<dt class="total">Total estimado</dt><dd class="total">' + brl(q.total) + "</dd></dl>" +
+          "<small>Horas adicionais sujeitas à disponibilidade. Sujeito à confirmação da data.</small>";
+      }
+      form.addEventListener("input", renderEstimate);
+      form.addEventListener("change", renderEstimate);
+      renderEstimate();
+
+      // Envio: abre o WhatsApp com o pedido formatado
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const err = $("q-error");
+        const d = data();
+        let msg = "";
+        if (!$("q-name").value.trim() || !$("q-phone").value.trim()) msg = "Preencha seu nome e WhatsApp.";
+        else if ($("q-phone").value.replace(/\D/g, "").length < 10) msg = "Informe o WhatsApp com DDD (mínimo 10 dígitos).";
+        else if (!d.date) msg = "Escolha a data desejada.";
+        else if (d.date < todayStr) msg = "A data não pode ser anterior a hoje.";
+        else if (d.date > S.HOLIDAYS_MAX) msg = "Para datas após " + fmtDate(S.HOLIDAYS_MAX) + ", fale direto conosco pelo WhatsApp.";
+        else if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date)) msg = "Data inválida.";
+        else if (!$("q-rules").checked) msg = "É preciso aceitar as regras da casa para enviar.";
+        err.hidden = !msg; err.textContent = msg;
+        if (msg) return;
+
+        const q = S.quote(d), tier = tierLabel(d.date);
+        const lines = [
+          "*Pedido de orçamento — Sophia Festas*",
+          "Nome: " + $("q-name").value.trim(),
+          "WhatsApp: " + $("q-phone").value.trim(),
+          "Data: " + fmtDate(d.date) + " (" + tier + ")",
+          "Tipo de evento: " + $("q-type").value,
+          "Horas adicionais: " + d.extraHours,
+          "Opcionais: " + (d.optionals.length ? d.optionals.join(", ") + " (valor a consultar)" : "nenhum"),
+          "",
+          "Diária (" + S.HOURS_INCLUDED + "h): " + brlText(q.rate),
+          "Horas adicionais: " + brlText(q.extra),
+          "Taxa de limpeza: " + brlText(q.cleaning),
+          "*Total estimado: " + brlText(q.total) + "*",
+        ];
+        if ($("q-msg").value.trim()) lines.push("", "Mensagem: " + $("q-msg").value.trim());
+        lines.push("", "Li e aceito as regras da casa.");
+        window.open(waLink(lines.join("\n")), "_blank", "noopener");
+        showToast("Abrindo o WhatsApp com o seu pedido!");
+      });
+    })();
   </script>
 </body>
 </html>

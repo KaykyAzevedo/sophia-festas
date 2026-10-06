@@ -141,8 +141,16 @@
     const toggle = nav.querySelector(".nav-toggle");
     const links = nav.querySelector(".nav-links");
     if (toggle && links) {
-      toggle.addEventListener("click", () => links.classList.toggle("open"));
-      links.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => links.classList.remove("open")));
+      const setMenu = (open) => {
+        links.classList.toggle("open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+      };
+      toggle.addEventListener("click", () => setMenu(!links.classList.contains("open")));
+      links.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+      addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && links.classList.contains("open")) { setMenu(false); toggle.focus(); }
+      });
     }
   }
 
