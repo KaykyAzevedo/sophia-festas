@@ -5,6 +5,7 @@
    API: window.SophiaBrand = { butterflySVG, logoSVG, name }
    Fontes: Great Vibes (Sophia) e Cinzel (FESTA), já carregadas nas páginas.
    Classes úteis p/ tema claro/impressão: .sf-word, .sf-sub, .sf-star.
+   Camadas .sf-layer[data-layer] (word, sub, star, bfly) permitem o parallax 3D do hero (magic.js).
    Animação: o grupo .wing-l (asas) bate via CSS (soft-flap / flap).
    ========================================================= */
 (function () {
@@ -94,16 +95,16 @@
         </filter>
       </defs>
       <g transform="translate(16 12)">
-        <text class="sf-word" transform="translate(26 236) scale(1 1.18)" font-family="'Great Vibes', cursive" font-size="172" fill="#fff"
-              stroke="#b9d6ff" stroke-width=".8" paint-order="stroke" filter="url(#${p}-relief)">Sophia</text>
-        <g class="logo-butterfly" transform="translate(-4 -2)">${butterflyShapes(p)}</g>
-        <g class="sf-star" filter="url(#${p}-glow)">
+        <g class="sf-layer" data-layer="word"><text class="sf-word" transform="translate(26 236) scale(1 1.18)" font-family="'Great Vibes', cursive" font-size="172" fill="#fff"
+              stroke="#b9d6ff" stroke-width=".8" paint-order="stroke" filter="url(#${p}-relief)">Sophia</text></g>
+        <g class="sf-layer" data-layer="bfly"><g class="logo-butterfly" transform="translate(-4 -2)">${butterflyShapes(p)}</g></g>
+        <g class="sf-layer" data-layer="star"><g class="sf-star" filter="url(#${p}-glow)">
           ${star8Facets(478, 136, 74, 44, 15, "#f2f8ff", "#4f95ff")}
           ${big ? [[438, 78, 12], [520, 82, 11], [528, 188, 11], [500, 216, 9]].map(([x, y, r]) =>
             `<polygon points="${star4(x, y, r)}" fill="url(#${p}-star)" stroke="#7fb2ff" stroke-width=".7"/>`).join("") : ""}
-        </g>
-        ${big ? `<text class="sf-sub" x="240" y="288" font-family="Cinzel, serif" font-weight="700" font-size="54" textLength="264" lengthAdjust="spacing" fill="#fff"
-              stroke="#fff" stroke-width=".9" paint-order="stroke">FESTA</text>` : ""}
+        </g></g>
+        ${big ? `<g class="sf-layer" data-layer="sub"><text class="sf-sub" x="266" y="294" font-family="Cinzel, serif" font-weight="700" font-size="52" textLength="246" lengthAdjust="spacing" fill="#fff"
+              stroke="#fff" stroke-width=".9" paint-order="stroke">FESTA</text></g>` : ""}
       </g>
     </svg>`;
   }

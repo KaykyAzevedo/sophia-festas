@@ -231,4 +231,65 @@
       }
     });
   }
+
+  /* ---------- logo 3D do hero: o mouse "afasta" a logo suavemente ---------- */
+  function initTilt() {
+    const hero = document.querySelector(".hero");
+    const holder = hero && hero.querySelector('[data-logo="big"]');
+    const svg = holder && holder.querySelector("svg");
+    if (!svg || reduce) return; // reduced-motion: logo parada
+    const layers = {};
+    svg.querySelectorAll("[data-layer]").forEach((g) => (layers[g.dataset.layer] = g));
+    const DEPTH = { word: 0, sub: 2.5, star: 7, bfly: 10 }; // deslocamento (unid. do SVG) por camada
+    const touch = matchMedia("(hover: none), (pointer: coarse)").matches;
+    const MAX = touch ? 4 : 8;                               // graus
+    holder.style.perspective = "900px";
+    let tx = 0, ty = 0, cx = 0, cy = 0, visible = true, raf = 0, last = 0, active = false;
+
+    const apply = () => {
+      const rx = -cy * MAX, ry = cx * MAX; // lado mais perto do cursor recua
+      svg.style.transform = `translate(${(-cx * 6).toFixed(2)}px, ${(-cy * 5).toFixed(2)}px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+      svg.style.filter = `drop-shadow(${(-cx * 10).toFixed(1)}px ${(-cy * 8 + 6).toFixed(1)}px 14px rgba(47,123,255,.28))`;
+      for (const k in layers) layers[k].style.transform = `translate(${(-cx * DEPTH[k]).toFixed(2)}px, ${(-cy * DEPTH[k]).toFixed(2)}px)`;
+    };
+    const frame = (t) => {
+      raf = 0;
+      if (touch) { // sem mouse: flutuação lenta e sutil
+        tx = Math.sin(t / 3800) * 0.7; ty = Math.cos(t / 5100) * 0.55;
+      }
+      cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
+      apply();
+      const settled = !touch && Math.abs(tx - cx) < 0.002 && Math.abs(ty - cy) < 0.002 && tx === 0 && ty === 0;
+      if (settled) { cx = cy = 0; apply(); svg.style.willChange = "auto"; active = false; return; }
+      if (visible && !document.hidden) raf = requestAnimationFrame(frame);
+    };
+    const kick = () => {
+      if (!active) { active = true; svg.style.willChange = "transform"; }
+      if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame);
+    };
+
+    if (!touch) {
+      // window (não o hero) para continuar reagindo sobre o nav fixo que cobre o topo do hero
+      addEventListener("pointermove", (e) => {
+        if (e.pointerType === "touch") return;
+        const r = hero.getBoundingClientRect();
+        if (e.clientY < r.top || e.clientY > r.bottom) { if (tx || ty) { tx = ty = 0; kick(); } return; }
+        const lr = svg.getBoundingClientRect();
+        // posição relativa ao centro da logo, normalizada pela área do hero
+        const ox = lr.left + lr.width / 2, oy = lr.top + lr.height / 2;
+        tx = Math.max(-1, Math.min(1, (e.clientX - ox) / (r.width / 2)));
+        ty = Math.max(-1, Math.min(1, (e.clientY - oy) / (r.height / 2)));
+        kick();
+      }, { passive: true });
+      document.documentElement.addEventListener("pointerleave", () => { tx = ty = 0; kick(); }, { passive: true });
+    } else kick();
+
+    new IntersectionObserver((es) => {
+      visible = es[0].isIntersecting;
+      if (visible) kick(); else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    }, { threshold: 0 }).observe(hero);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) kick(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initTilt);
+  else initTilt();
 })();
