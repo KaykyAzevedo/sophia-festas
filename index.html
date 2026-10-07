@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/fachada.jpg">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -34,6 +35,7 @@
 
   <!-- HERO -->
   <header class="hero" id="inicio">
+    <img class="hero-bg" src="img/fachada.jpg" alt="" width="1448" height="1086" fetchpriority="high" decoding="async">
     <div class="hero-halo"></div>
     <div class="hero-ring"></div>
     <div class="hero-ring r2"></div>
@@ -121,6 +123,10 @@
       <h2 class="section-title reveal">O que está incluso <em>na diária</em></h2>
       <p class="lead reveal">Piscina grande e área externa com medidas <strong class="tbc">a confirmar</strong>.</p>
       <ul class="check-grid reveal" id="included-list"></ul>
+      <div class="fig-row">
+        <figure class="photo-fig reveal"><img src="img/churrasqueira-cozinha.jpg" alt="Balcão de granito com churrasqueira de tijolos e fogão industrial" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>Churrasqueira e cozinha</figcaption></figure>
+        <figure class="photo-fig reveal"><img src="img/salao-mesas.jpg" alt="Área coberta com mesas de toalha preta e cadeiras pretas, balcão ao fundo" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>Área coberta com mesas</figcaption></figure>
+      </div>
     </div>
   </section>
 
@@ -131,6 +137,7 @@
       <h2 class="section-title reveal">Quer ir <em>além</em>?</h2>
       <p class="lead reveal">Itens extras, todos com valor sob consulta.</p>
       <div class="optionals" id="optionals-list"></div>
+      <figure class="photo-fig single reveal"><img src="img/piscina-telao.jpg" alt="Piscina à noite com telão na parede ao fundo" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>Telão junto à piscina — opcional, valor sob consulta</figcaption></figure>
     </div>
   </section>
 
@@ -149,6 +156,7 @@
       <p class="eyebrow reveal">Regras da casa</p>
       <h2 class="section-title reveal">Para todos <em>aproveitarem bem</em></h2>
       <ul class="rules metal-frame reveal" id="rules-list"></ul>
+      <figure class="photo-fig single reveal"><img src="img/recuo-estacionamento.jpg" alt="Recuo em frente ao local, com carros estacionados ao lado do muro azul com o letreiro" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>Os carros ficam no recuo em frente ao local</figcaption></figure>
       <p class="lead reveal" style="margin-top:1.5rem">Veja o <a class="inline-link" href="contrato.html">termo de locação completo</a> e assine online.</p>
     </div>
   </section>
@@ -158,14 +166,17 @@
     <div class="container center">
       <p class="eyebrow reveal">Galeria</p>
       <h2 class="section-title reveal">Conheça o <em>espaço</em></h2>
-      <p class="lead reveal">Fotos reais em breve.</p>
-      <div class="gallery reveal">
-        <div class="g tall ph-4"><span class="ph-label">FOTO: PISCINA</span></div>
-        <div class="g wide ph-2"><span class="ph-label">FOTO: ÁREA EXTERNA</span></div>
-        <div class="g ph-5"><span class="ph-label">FOTO: CHURRASQUEIRA</span></div>
-        <div class="g ph-6"><span class="ph-label">FOTO: SINUCA E TOTÓ</span></div>
-        <div class="g ph-1"><span class="ph-label">FOTO: ÁREA DE DECORAÇÃO</span></div>
-        <div class="g ph-3"><span class="ph-label">FOTO: FACHADA</span></div>
+      <p class="lead reveal">Toque em uma foto para ampliar. Medidas da piscina e da área externa: <strong class="tbc">a confirmar</strong>.</p>
+      <div class="gallery reveal" id="gallery">
+        <button type="button" class="g first" data-lightbox aria-label="Ampliar foto: Fachada"><img src="img/fachada.jpg" alt="Fachada ao entardecer, com muro azul e letreiro, palmeiras e arco de flores no portão" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Fachada</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Área externa e piscina"><img src="img/area-externa-piscina.jpg" alt="Área externa de piso com piscina cercada, varanda e terraço superior" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Área externa e piscina</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Piscina à noite"><img src="img/piscina-telao.jpg" alt="Piscina à noite com telão na parede ao fundo" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Piscina à noite</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Área coberta com mesas"><img src="img/salao-mesas.jpg" alt="Área coberta com mesas de toalha preta e cadeiras pretas, balcão ao fundo" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Área coberta com mesas</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Churrasqueira e cozinha"><img src="img/churrasqueira-cozinha.jpg" alt="Balcão de granito com churrasqueira de tijolos e fogão industrial" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Churrasqueira e cozinha</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Área para decoração"><img src="img/salao-decoracao.jpg" alt="Área interna ampla para decoração, com painel de aniversário montado" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Área para decoração</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Área de jogos"><img src="img/area-jogos.jpg" alt="Área de jogos coberta, com sinuca e totó" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Área de jogos</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Recuo para carros"><img src="img/recuo-estacionamento.jpg" alt="Vista lateral do recuo com carros estacionados e o muro azul com o letreiro" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Recuo para carros</span></button>
+        <button type="button" class="g" data-lightbox aria-label="Ampliar foto: Fachada com carros no recuo"><img src="img/fachada-recuo-carros.jpg" alt="Fachada com carros estacionados no recuo em frente ao local" width="1448" height="1086" loading="lazy" decoding="async"><span class="g-cap">Fachada com carros no recuo</span></button>
       </div>
     </div>
   </section>

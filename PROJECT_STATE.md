@@ -14,6 +14,7 @@ HTML + CSS + JavaScript puro. Fontes Google (Great Vibes, Cinzel, Cormorant Gara
 - `agenda.html` — área da equipe (login demo → calendário, lista de reservas, CRUD) para a casa única; storage `sophia.bookings.v2`
 - `contrato.html` + `js/contrato.js` — termo de locação gerado a partir de SOPHIA, com aceite eletrônico simples (sem back end): CPF validado, assinatura digitada igual ao nome, comprovante com código de aceite, impressão/PDF e envio por WhatsApp. Aceita `?date=YYYY-MM-DD&type=...` para pré-preencher.
 - `js/config.js` — FONTE ÚNICA (`window.SOPHIA`): WhatsApp, diárias, horas incluídas, hora extra, taxa de limpeza, cashback, feriados/datas comemorativas, opcionais, tipos de evento, itens inclusos, regras e as funções `isHoliday`, `dayRate`, `quote`, `cashbackBase`. Landing e agenda dependem dele.
+- `img/` — 9 fotos reais do cliente (JPEG 1448x1086): fachada (hero), fachada com carros, recuo, piscina com telão, área externa, salão com mesas, churrasqueira/cozinha, salão para decoração e área de jogos. Usadas na galeria (lightbox em `magic.js`) e em figuras nas seções incluso, opcionais e regras. Caminhos relativos, sem barra inicial (site em subpasta no GitHub Pages).
 - `css/style.css` — identidade visual compartilhada; `css/agenda.css` — painel
 - `js/brand.js` — logo SVG e borboleta reutilizável; `js/magic.js` — estrelas, borboletas, brilho do cursor, nav (aria/Esc), reveal, toast
 - `js/agenda.js` — lógica da agenda
@@ -43,14 +44,15 @@ Nenhum bug confirmado. As entregas (landing, correções e contrato.html) foram 
 - Cláusulas de danos, pagamento/sinal, confirmação, cancelamento e dados da locadora estão como A DEFINIR no termo (não inventar até o cliente informar).
 
 ## Regras do projeto
-Não adicionar back end até aprovação da ideia. Fotos são placeholders (gradientes).
+Não adicionar back end até aprovação da ideia. Fotos reais em img/ (usadas como estão, sem conversão/otimização). Não acrescentar itens inclusos ou ao termo por causa do que aparece nas fotos.
 
 ## Pendências
 - Número real do WhatsApp (hoje placeholder 5500000000000)
 - Dados do termo marcados "A DEFINIR" em contrato.html: dados da locadora, endereço do imóvel, forma de pagamento/sinal, política de cancelamento, procedimento de danos, regras do cashback, foro
 - Logo oficial (adiado por decisão do cliente; o logo atual é provisório)
-- Fotos reais
 - Medidas (piscina, área externa), endereço e mapa — marcados "a confirmar" no site
+- Confirmar com a dona se ping-pong e espaço infantil (visíveis na foto da área de jogos) entram nos itens inclusos — hoje a legenda é só "Área de jogos"
+- Otimizar fotos (WebP/redimensionar) quando houver ferramenta
 - Valores dos opcionais
 - Lista definitiva de datas comemorativas (aguardando o cliente; Namorados, São João e Halloween já incluídos)
 - Contrato com assinatura qualificada (hoje só aceite eletrônico simples), se o cliente exigir

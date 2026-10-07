@@ -174,4 +174,65 @@
     clearTimeout(t._h);
     t._h = setTimeout(() => t.classList.remove("show"), 3600);
   };
+
+  /* ---------- lightbox da galeria ---------- */
+  const thumbs = [...document.querySelectorAll("[data-lightbox]")];
+  if (thumbs.length) {
+    let lb, imgEl, capEl, idx = 0, opener = null;
+    const build = () => {
+      lb = document.createElement("div");
+      lb.className = "lb";
+      lb.setAttribute("role", "dialog");
+      lb.setAttribute("aria-modal", "true");
+      lb.setAttribute("aria-label", "Foto ampliada");
+      lb.hidden = true;
+      lb.innerHTML = '<button type="button" class="lb-close" aria-label="Fechar">&times;</button>' +
+        '<button type="button" class="lb-prev" aria-label="Foto anterior">&#8249;</button>' +
+        '<figure><img alt=""><figcaption></figcaption></figure>' +
+        '<button type="button" class="lb-next" aria-label="Próxima foto">&#8250;</button>';
+      document.body.appendChild(lb);
+      imgEl = lb.querySelector("img");
+      capEl = lb.querySelector("figcaption");
+      lb.addEventListener("click", (e) => { if (e.target === lb) close(); }); // clique fora da foto
+      lb.querySelector(".lb-close").addEventListener("click", close);
+      lb.querySelector(".lb-prev").addEventListener("click", () => show(idx - 1));
+      lb.querySelector(".lb-next").addEventListener("click", () => show(idx + 1));
+    };
+    const show = (i) => {
+      idx = (i + thumbs.length) % thumbs.length;
+      const t = thumbs[idx], im = t.querySelector("img"), cap = t.querySelector(".g-cap");
+      imgEl.src = im.currentSrc || im.src;
+      imgEl.alt = im.alt;
+      capEl.textContent = cap ? cap.textContent : "";
+    };
+    const open = (i, from) => {
+      if (!lb) build();
+      opener = from;
+      show(i);
+      lb.hidden = false;
+      document.body.classList.add("lb-lock");
+      requestAnimationFrame(() => lb.classList.add("open"));
+      lb.querySelector(".lb-close").focus();
+    };
+    function close() {
+      if (!lb || lb.hidden) return;
+      lb.classList.remove("open");
+      lb.hidden = true;
+      document.body.classList.remove("lb-lock");
+      if (opener) opener.focus();
+    }
+    thumbs.forEach((t, i) => t.addEventListener("click", () => open(i, t)));
+    addEventListener("keydown", (e) => {
+      if (!lb || lb.hidden) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(idx - 1);
+      else if (e.key === "ArrowRight") show(idx + 1);
+      else if (e.key === "Tab") { // mantém o foco dentro do diálogo
+        const f = [...lb.querySelectorAll("button")];
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+  }
 })();
