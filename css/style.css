@@ -61,8 +61,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   opacity: 0; will-change: transform, opacity;
   filter: drop-shadow(0 0 6px var(--blue-glow));
 }
-.mini-fly .wing-l, .mini-fly .wing-r { transform-origin: 50% 50%; animation: flap .28s ease-in-out infinite alternate; }
-.mini-fly .wing-r { animation-delay: .02s; }
+.mini-fly .wing-l { transform-origin: 50% 50%; animation: flap .28s ease-in-out infinite alternate; }
 
 @keyframes flap {
   from { transform: scaleX(1); }
@@ -181,8 +180,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* ---------- logo ---------- */
 .logo-mark { overflow: visible; }
 .logo-big { width: min(640px, 92vw); height: auto; margin: 0 auto; }
-.logo-big .logo-butterfly .wing-l, .logo-big .logo-butterfly .wing-r,
-.logo-mark .logo-butterfly .wing-l, .logo-mark .logo-butterfly .wing-r {
+.logo-big .logo-butterfly .wing-l,
+.logo-mark .logo-butterfly .wing-l {
   transform-box: fill-box;
   animation: soft-flap 3.2s ease-in-out infinite;
 }
@@ -292,7 +291,7 @@ section { padding: clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 3rem); position: rel
 .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; z-index: 0; }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(3,4,9,.78), rgba(3,4,9,.86) 60%, var(--black));
+  background: linear-gradient(180deg, rgba(3,4,9,.92), rgba(3,4,9,.78) 18%, rgba(3,4,9,.86) 60%, var(--black));
 }
 
 /* fotos nas seções */
@@ -393,6 +392,7 @@ input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(.8) sepia
 /* rodapé */
 footer { padding: 4rem 1rem 2.5rem; text-align: center; border-top: 1px solid var(--line); }
 footer .logo-mark { height: 70px; margin: 0 auto 1rem; }
+footer .logo-big { width: min(300px, 80vw); margin: 0 auto 1rem; }
 footer p { color: var(--muted); font-size: .8rem; }
 footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; color: var(--blue-ice); margin-bottom: 1.4rem; }
 
@@ -447,7 +447,7 @@ footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-si
 }
 
 /* borboleta avulsa (seções, toast) bate as asas suavemente */
-.butterfly-svg .wing-l, .butterfly-svg .wing-r { transform-box: fill-box; animation: soft-flap 3.6s ease-in-out infinite; }
+.butterfly-svg .wing-l { transform-box: fill-box; animation: soft-flap 3.6s ease-in-out infinite; }
 
 /* brilho do cursor */
 .spark {
