@@ -74,10 +74,7 @@
       el.innerHTML = MINI();
       const size = 10 + Math.random() * 12;
       el.style.width = el.style.height = size + "px";
-      const flap = el.querySelector(".wing-l");
-      flap.style.transformBox = "fill-box";
-      flap.style.transformOrigin = "100% 70%";
-      flap.style.animation = `flap ${0.18 + Math.random() * 0.16}s ease-in-out infinite alternate`;
+      el.style.setProperty("--bf-dur", (0.5 + Math.random() * 0.3).toFixed(2) + "s"); // bater rápido das borboletinhas
       layer.appendChild(el);
       flies.push(spawn({ el, size }, true));
     }

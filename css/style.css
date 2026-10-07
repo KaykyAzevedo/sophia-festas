@@ -61,12 +61,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   opacity: 0; will-change: transform, opacity;
   filter: drop-shadow(0 0 6px var(--blue-glow));
 }
-.mini-fly .wing-l { transform-origin: 50% 50%; animation: flap .28s ease-in-out infinite alternate; }
-
-@keyframes flap {
-  from { transform: scaleX(1); }
-  to   { transform: scaleX(.25); }
-}
 
 /* ---------- textos metálicos ---------- */
 .metal-text {
@@ -180,16 +174,43 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* ---------- logo ---------- */
 .logo-mark { overflow: visible; }
 .logo-big { width: min(640px, 92vw); height: auto; margin: 0 auto; }
-.logo-big .logo-butterfly .wing-l,
-.logo-mark .logo-butterfly .wing-l {
-  transform-box: fill-box;
-  animation: soft-flap 3.2s ease-in-out infinite;
+
+/* ---------- borboleta: bater de asas orgânico (abre devagar, fecha rápido, pausa aberta) ---------- */
+/* solta (de frente): duas asas espelhadas, articuladas junto ao corpo, dobra 3D; asa de trás defasada */
+.butterfly-svg .bf-fore, .butterfly-svg .bf-hind {
+  transform-box: fill-box; --amp: 72;
+  animation: bf-flap var(--bf-dur, 3.6s) infinite;
 }
-.logo-butterfly .wing-l { transform-origin: 100% 70%; }
-@keyframes soft-flap {
-  0%, 70%, 100% { transform: scaleX(1); }
-  80% { transform: scaleX(.55); }
-  90% { transform: scaleX(1); }
+.butterfly-svg .bf-hind { --amp: 62; animation-delay: calc(var(--bf-dur, 3.6s) * .05); }
+.butterfly-svg .l { --dir: -1; }
+.butterfly-svg .r { --dir: 1; }
+.butterfly-svg .bf-fore.l { transform-origin: 100% 100%; }
+.butterfly-svg .bf-fore.r { transform-origin: 0 100%; }
+.butterfly-svg .bf-hind.l { transform-origin: 100% 0; }
+.butterfly-svg .bf-hind.r { transform-origin: 0 0; }
+.butterfly-svg .bf-body { transform-box: fill-box; transform-origin: 50% 70%; animation: bf-sway var(--bf-dur, 3.6s) ease-in-out infinite; }
+@keyframes bf-flap {
+  0%   { transform: perspective(340px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  16%  { transform: perspective(340px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  34%  { transform: perspective(340px) rotateY(calc(var(--dir) * var(--amp) * 1deg)); animation-timing-function: cubic-bezier(.25, .6, .3, 1); }
+  100% { transform: perspective(340px) rotateY(0deg); }
+}
+@keyframes bf-sway {
+  0%, 16%, 100% { transform: rotate(0deg) translateY(0); }
+  34% { transform: rotate(-1.6deg) translateY(1px); }
+  60% { transform: rotate(.8deg) translateY(-.6px); }
+}
+/* da logo (de perfil): asa da frente e asa de trás levemente defasadas */
+.logo-butterfly .pw-fore, .logo-butterfly .pw-hind {
+  transform-box: fill-box; animation: pw-flap var(--pw-dur, 3.8s) infinite;
+}
+.logo-butterfly .pw-fore { transform-origin: 100% 94%; }
+.logo-butterfly .pw-hind { transform-origin: 100% 6%; animation-delay: .16s; }
+@keyframes pw-flap {
+  0%   { transform: perspective(300px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  62%  { transform: perspective(300px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  72%  { transform: perspective(300px) rotateY(-58deg); animation-timing-function: cubic-bezier(.25, .6, .3, 1); }
+  100% { transform: perspective(300px) rotateY(0deg); }
 }
 
 /* ---------- hero ---------- */
@@ -447,7 +468,6 @@ footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-si
 }
 
 /* borboleta avulsa (seções, toast) bate as asas suavemente */
-.butterfly-svg .wing-l { transform-box: fill-box; animation: soft-flap 3.6s ease-in-out infinite; }
 
 /* brilho do cursor */
 .spark {
