@@ -1,5 +1,5 @@
 /* =========================================================
-   Sophia Festas — configuração central (locação da casa por diária)
+   Sophia Festa — configuração central (locação da casa por diária)
    Compartilhado entre a landing e a agenda. Sem back end.
    ========================================================= */
 (function () {

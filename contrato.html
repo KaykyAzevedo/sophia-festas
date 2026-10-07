@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Termo de Locação — Sophia Festas</title>
-  <meta name="description" content="Termo de locação da casa Sophia Festas e aceite eletrônico.">
+  <title>Termo de Locação — Sophia Festa</title>
+  <meta name="description" content="Termo de locação da casa Sophia Festa e aceite eletrônico.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -31,6 +31,7 @@
     .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 1.4rem; letter-spacing: .14em; color: var(--blue-ice); }
     .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
     .back { display: inline-block; margin-bottom: 1rem; color: var(--blue-soft); font-size: .85rem; }
+    .print-brand { display: none; }
     .nav-back { font-family: var(--font-display); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--silver); }
 
     @media (max-width: 520px) { .receipt dl { grid-template-columns: 1fr; } .receipt dt { margin-top: .5rem; } }
@@ -43,6 +44,11 @@
       .term, .receipt { background: #fff !important; backdrop-filter: none; border: 1px solid #999; border-radius: 6px; padding: 14px; margin-top: 14px; }
       .metal-frame::before { display: none; }
       .eyebrow, .section-title, .section-title em, .lead, .term h3, .term p, .term li, .receipt h2, .receipt dd, .receipt dt, .code, .notice { color: #000 !important; }
+      .print-brand { display: block; width: 230px; margin-bottom: 10px; }
+      .print-brand .sf-word, .print-brand .sf-sub { fill: #0b1a4a !important; stroke: none !important; filter: none !important; }
+      .print-brand .sf-star { filter: none !important; }
+      .print-brand .sf-star polygon { fill: #2f7bff !important; stroke: #1648ad !important; }
+      .print-brand svg { overflow: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .tbc { color: #000; border-bottom: 1px dashed #000; }
       .receipt h2, .term h3 { break-after: avoid; }
       .term li, .receipt dl { break-inside: avoid; }
@@ -60,6 +66,7 @@
   </nav>
 
   <main class="doc">
+    <div class="print-brand" data-logo="mark" role="img" aria-label="Sophia Festa"></div>
     <a class="back" href="index.html">← Voltar ao site</a>
     <p class="eyebrow">Locação por diária</p>
     <h1 class="section-title">Termo de <em>Locação</em></h1>
@@ -98,7 +105,7 @@
 
   <footer>
     <div data-logo="mark"></div>
-    <p>© 2026 Sophia Festas · Protótipo visual · <a href="index.html" style="color:var(--blue-soft)">Voltar ao site</a></p>
+    <p>© 2026 Sophia Festa · Protótipo visual · <a href="index.html" style="color:var(--blue-soft)">Voltar ao site</a></p>
   </footer>
 
   <script src="js/config.js"></script>

@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sophia Festas — Casa para alugar por diária</title>
-  <meta name="description" content="Sophia Festas — aluguel de casa por diária para festas, churrascos e confraternizações. Piscina, churrasqueira, som JBL e estrutura completa. Só o espaço, você faz a festa.">
+  <title>Sophia Festa — Casa para alugar por diária</title>
+  <meta name="description" content="Sophia Festa — aluguel de casa por diária para festas, churrascos e confraternizações. Piscina, churrasqueira, som JBL e estrutura completa. Só o espaço, você faz a festa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="img/fachada.jpg">
+  <link rel="preload" as="image" href="img/piscina-telao.jpg">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -35,7 +35,7 @@
 
   <!-- HERO -->
   <header class="hero" id="inicio">
-    <img class="hero-bg" src="img/fachada.jpg" alt="" width="1448" height="1086" fetchpriority="high" decoding="async">
+    <img class="hero-bg" src="img/piscina-telao.jpg" alt="" width="1448" height="1086" fetchpriority="high" decoding="async">
     <div class="hero-halo"></div>
     <div class="hero-ring"></div>
     <div class="hero-ring r2"></div>
@@ -231,11 +231,11 @@
 
   <footer>
     <div data-logo="mark"></div>
-    <p><a href="contrato.html" style="color:var(--blue-soft)">Termo de locação</a> · © 2026 Sophia Festas · Protótipo visual · <a href="agenda.html" style="color:var(--blue-soft)">Área da equipe</a></p>
+    <p><a href="contrato.html" style="color:var(--blue-soft)">Termo de locação</a> · © 2026 Sophia Festa · Protótipo visual · <a href="agenda.html" style="color:var(--blue-soft)">Área da equipe</a></p>
   </footer>
 
   <!-- Balão flutuante do WhatsApp -->
-  <a class="wa-float" id="wa-float" href="#" target="_blank" rel="noopener" aria-label="Falar com a Sophia Festas pelo WhatsApp">
+  <a class="wa-float" id="wa-float" href="#" target="_blank" rel="noopener" aria-label="Falar com a Sophia Festa pelo WhatsApp">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 3.5 3 6.5 6.500 6.500l1-1.600-2-1-.9.900c-1-.4-2-1.400-2.400-2.400l.9-.9-1-2z"/></svg>
     <span class="wa-label">WhatsApp</span>
   </a>
@@ -263,7 +263,7 @@
         '<label class="check-line"><input type="checkbox" name="opt" value="' + esc(o.id) + '"> <span>' + esc(o.label) + "</span></label>").join("");
 
       // WhatsApp: balão e contato
-      $("wa-float").href = waLink("Olá! Vim pelo site da Sophia Festas e gostaria de saber mais sobre o aluguel da casa.");
+      $("wa-float").href = waLink("Olá! Vim pelo site da Sophia Festa e gostaria de saber mais sobre o aluguel da casa.");
       const digits = S.WHATSAPP.replace(/^55/, "");
       $("info-wa").textContent = "(" + digits.slice(0, 2) + ") " + digits.slice(2, 7) + "-" + digits.slice(7);
       $("info-wa").href = waLink("Olá! Gostaria de informações sobre o aluguel da casa.");
@@ -323,7 +323,7 @@
 
         const q = S.quote(d), tier = tierLabel(d.date);
         const lines = [
-          "*Pedido de orçamento — Sophia Festas*",
+          "*Pedido de orçamento — Sophia Festa*",
           "Nome: " + $("q-name").value.trim(),
           "WhatsApp: " + $("q-phone").value.trim(),
           "Data: " + fmtDate(d.date) + " (" + tier + ")",

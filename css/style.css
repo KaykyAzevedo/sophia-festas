@@ -1,5 +1,5 @@
 /* =========================================================
-   Sophia Festas — identidade: preto, azul e metal
+   Sophia Festa — identidade: preto, azul e metal
    ========================================================= */
 :root {
   --black: #030409;
@@ -120,7 +120,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .btn-primary {
   color: #fff;
-  background: linear-gradient(135deg, #1a4fc0, #2f7bff 50%, #1a4fc0);
+  background: linear-gradient(135deg, #1648ad, #1f5fe0 50%, #1648ad);
   box-shadow: 0 0 0 1px rgba(185,214,255,.35) inset, 0 10px 30px -10px var(--blue-glow);
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(185,214,255,.6) inset, 0 16px 40px -10px var(--blue-glow); }
@@ -186,8 +186,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   transform-box: fill-box;
   animation: soft-flap 3.2s ease-in-out infinite;
 }
-.logo-butterfly .wing-l { transform-origin: 100% 60%; }
-.logo-butterfly .wing-r { transform-origin: 0% 60%; }
+.logo-butterfly .wing-l { transform-origin: 100% 70%; }
 @keyframes soft-flap {
   0%, 70%, 100% { transform: scaleX(1); }
   80% { transform: scaleX(.55); }
@@ -290,7 +289,7 @@ section { padding: clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 3rem); position: rel
 .tbc { color: var(--blue-soft); font-weight: 400; font-style: italic; border-bottom: 1px dashed var(--blue-soft); }
 
 /* hero com foto */
-.hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; z-index: 0; }
+.hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; z-index: 0; }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(180deg, rgba(3,4,9,.78), rgba(3,4,9,.86) 60%, var(--black));
@@ -337,13 +336,16 @@ body.lb-lock { overflow: hidden; }
 
 /* contato */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; margin-top: 3rem; }
+.contact-grid > * { min-width: 0; }
 .contact-info { padding: 2.2rem; display: grid; gap: 1.4rem; align-content: start; }
 .info-row { display: grid; grid-template-columns: 40px 1fr; gap: 1rem; align-items: center; }
 .info-row .ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--blue-ice); box-shadow: 0 0 0 1px rgba(106,168,255,.35) inset; }
 .info-row .ic svg { width: 18px; height: 18px; }
 .info-row small { display: block; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 
-.form { padding: 2.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form { padding: 2.2rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.form > * { min-width: 0; }
+.field input, .field select, .field textarea { width: 100%; min-width: 0; }
 .form .full { grid-column: 1 / -1; }
 .field { display: grid; gap: .35rem; }
 .field label { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--silver-dim); }
@@ -412,7 +414,8 @@ footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-si
   .rates, .optionals { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
   .rate.featured { transform: none; }
   .check-grid { grid-template-columns: repeat(2, 1fr); }
-  .symbol-grid, .contact-grid { grid-template-columns: 1fr; }
+  .symbol-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: minmax(0, 1fr); }
   .symbol-art { max-width: 380px; margin: 0 auto; }
   .gallery { grid-template-columns: repeat(2, 1fr); }
   .gallery .g.first { grid-column: 1 / -1; }
@@ -436,7 +439,7 @@ footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-si
   .lb-next { right: calc(50% - 56px); }
   .wa-float { height: 52px; width: 52px; padding: 0; }
   .wa-float .wa-label { display: none; }
-  .form { grid-template-columns: 1fr; padding: 1.5rem; }
+  .form { grid-template-columns: minmax(0, 1fr); padding: 1.5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -454,4 +457,4 @@ footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-si
 }
 @keyframes spark-fade { to { transform: translateY(14px) scale(.2); opacity: 0; } }
 
-@media (max-height: 760px) { .scroll-hint { display: none; } }
+@media (max-height: 900px) { .scroll-hint { display: none; } }

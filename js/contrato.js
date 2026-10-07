@@ -13,7 +13,7 @@
   const R = S.RATES;
   $("term").innerHTML =
     "<h3>1. Partes</h3>" +
-    "<p><strong>Locadora:</strong> Sophia Festas — razão social, CNPJ/CPF e endereço: " + TBD("dados da locadora") + ".<br>" +
+    "<p><strong>Locadora:</strong> Sophia Festa — razão social, CNPJ/CPF e endereço: " + TBD("dados da locadora") + ".<br>" +
     "<strong>Locatário(a):</strong> a pessoa que assina este termo na seção abaixo, identificada por nome completo, CPF e telefone.</p>" +
     "<h3>2. Objeto</h3>" +
     "<p>Locação, por diária, de uma casa de lazer localizada em " + TBD("endereço do imóvel") + ", exclusivamente como espaço. " +
@@ -121,7 +121,7 @@
     ].map((r) => "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>").join("");
     $("receipt-code").textContent = "Código de referência: " + cod;
     const msg = [
-      "*Aceite do termo de locação — Sophia Festas*",
+      "*Aceite do termo de locação — Sophia Festa*",
       "Nome: " + name, "CPF: " + cpf, "Telefone: " + phone,
       "Data do evento: " + fmtDate(date), "Tipo de evento: " + type,
       "Diária: " + plain(brl(rate)), "Assinado em: " + stamp,

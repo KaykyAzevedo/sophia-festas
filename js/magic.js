@@ -64,23 +64,19 @@
 
   /* ---------- borboletinhas azuis voando ---------- */
   const layer = document.getElementById("flutter");
-  if (layer && !reduce) {
-    const MINI = `<svg viewBox="-70 -60 140 120"><g class="flap">
-      <path d="M-2,-2 C-14,-34 -52,-56 -60,-34 C-66,-16 -44,2 -4,4 Z M-2,6 C-32,8 -46,28 -36,42 C-26,54 -8,34 -1,12 Z" fill="#2f7bff"/>
-      <path d="M2,-2 C14,-34 52,-56 60,-34 C66,-16 44,2 4,4 Z M2,6 C32,8 46,28 36,42 C26,54 8,34 1,12 Z" fill="#2f7bff"/>
-      <path d="M-6,-4 C-18,-26 -42,-40 -48,-28 C-52,-18 -36,-6 -8,0 Z M6,-4 C18,-26 42,-40 48,-28 C52,-18 36,-6 8,0 Z" fill="#b9d6ff" opacity=".7"/>
-      <ellipse cx="0" cy="4" rx="3" ry="18" fill="#0b1226"/></g></svg>`;
-
+  if (layer && !reduce && window.SophiaBrand) {
+    const MINI = () => window.SophiaBrand.butterflySVG();
     const count = innerWidth < 700 ? 4 : 7;
     const flies = [];
     for (let i = 0; i < count; i++) {
       const el = document.createElement("div");
       el.className = "mini-fly";
-      el.innerHTML = MINI;
+      el.innerHTML = MINI();
       const size = 10 + Math.random() * 12;
       el.style.width = el.style.height = size + "px";
-      const flap = el.querySelector(".flap");
-      flap.style.transformOrigin = "0 0";
+      const flap = el.querySelector(".wing-l");
+      flap.style.transformBox = "fill-box";
+      flap.style.transformOrigin = "100% 70%";
       flap.style.animation = `flap ${0.18 + Math.random() * 0.16}s ease-in-out infinite alternate`;
       layer.appendChild(el);
       flies.push(spawn({ el, size }, true));
