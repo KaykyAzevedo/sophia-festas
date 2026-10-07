@@ -358,6 +358,8 @@ input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(.8) sepia
 .estimate dd { text-align: right; }
 .estimate .total { color: #fff; font-weight: 500; border-top: 1px solid var(--line); padding-top: .5rem; margin-top: .3rem; }
 .estimate small { display: block; margin-top: .6rem; color: var(--muted); font-size: .75rem; }
+.after-send, .inline-link { color: var(--muted); font-size: .9rem; }
+.after-send a, .inline-link { color: var(--blue-soft); text-decoration: underline; }
 .form-error { color: #ff9aa8; font-size: .85rem; }
 
 /* balão flutuante do WhatsApp */

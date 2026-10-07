@@ -73,7 +73,7 @@
           </div>
           <div class="stage">
             <div class="stage-icon metal-frame">III</div>
-            <div><h4>Aproveite</h4><p>8 horas de casa inteira para você e seus convidados. Ganhe 10% de cashback no próximo evento.</p></div>
+            <div><h4>Aproveite</h4><p>8 horas de casa inteira para você e seus convidados. Ganhe 10% de cashback (sobre a diária, sem a taxa de limpeza) no próximo evento.</p></div>
           </div>
         </div>
       </div>
@@ -101,7 +101,7 @@
         <div class="rate metal-frame reveal">
           <h3>Sábados, domingos, feriados e datas comemorativas</h3>
           <p class="rate-price metal-text">R$ 1.500,00</p>
-          <p class="rate-sub">por diária</p>
+          <p class="rate-sub">por diária · inclui datas comemorativas como Dia dos Namorados, São João e Halloween</p>
         </div>
       </div>
 
@@ -109,7 +109,7 @@
         <li><strong>8 horas de festa</strong> incluídas na diária.</li>
         <li><strong>Hora adicional:</strong> 10% do valor da diária, mediante disponibilidade.</li>
         <li><strong>Taxa de limpeza:</strong> R$ 150,00, cobrada à parte.</li>
-        <li><strong>Cashback:</strong> 10% de desconto para o seu próximo evento.</li>
+        <li><strong>Cashback:</strong> 10% do valor da diária (sem a taxa de limpeza) como desconto no seu próximo evento.</li>
       </ul>
     </div>
   </section>
@@ -149,6 +149,7 @@
       <p class="eyebrow reveal">Regras da casa</p>
       <h2 class="section-title reveal">Para todos <em>aproveitarem bem</em></h2>
       <ul class="rules metal-frame reveal" id="rules-list"></ul>
+      <p class="lead reveal" style="margin-top:1.5rem">Veja o <a class="inline-link" href="contrato.html">termo de locação completo</a> e assine online.</p>
     </div>
   </section>
 
@@ -208,9 +209,10 @@
 
           <div class="full estimate" id="q-estimate" aria-live="polite"></div>
 
-          <label class="full check-line"><input type="checkbox" id="q-rules" required> <span>Li e aceito as <a href="#regras">regras da casa</a>.</span></label>
+          <label class="full check-line"><input type="checkbox" id="q-rules" required> <span>Li e aceito as <a href="#regras">regras da casa</a> e o <a href="contrato.html" target="_blank" rel="noopener">termo de locação</a>.</span></label>
           <p class="full form-error" id="q-error" role="alert" hidden></p>
           <div class="full"><button class="btn btn-primary" type="submit">Enviar pelo WhatsApp</button></div>
+          <p class="full after-send" id="q-after" hidden>Pedido enviado! Já pode <a id="q-sign" href="contrato.html" target="_blank" rel="noopener">assinar o termo de locação</a>.</p>
         </form>
       </div>
     </div>
@@ -218,7 +220,7 @@
 
   <footer>
     <div data-logo="mark"></div>
-    <p>© 2026 Sophia Festas · Protótipo visual · <a href="agenda.html" style="color:var(--blue-soft)">Área da equipe</a></p>
+    <p><a href="contrato.html" style="color:var(--blue-soft)">Termo de locação</a> · © 2026 Sophia Festas · Protótipo visual · <a href="agenda.html" style="color:var(--blue-soft)">Área da equipe</a></p>
   </footer>
 
   <!-- Balão flutuante do WhatsApp -->
@@ -326,6 +328,8 @@
         if ($("q-msg").value.trim()) lines.push("", "Mensagem: " + $("q-msg").value.trim());
         lines.push("", "Li e aceito as regras da casa.");
         window.open(waLink(lines.join("\n")), "_blank", "noopener");
+        $("q-sign").href = "contrato.html?" + new URLSearchParams({ date: d.date, type: $("q-type").value }).toString();
+        $("q-after").hidden = false;
         showToast("Abrindo o WhatsApp com o seu pedido!");
       });
     })();

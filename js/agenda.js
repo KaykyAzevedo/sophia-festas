@@ -23,7 +23,10 @@
   const pad = (n) => String(n).padStart(2, "0");
   const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const parse = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
-  const brl = (v) => "R$ " + Number(v || 0).toLocaleString("pt-BR");
+  const brl = (v) => {
+    const n = Number(v || 0), frac = Math.abs(n * 100 % 100) > 0.001 && Math.abs(n * 100 % 100) < 99.999;
+    return "R$ " + n.toLocaleString("pt-BR", frac ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 });
+  };
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const statusClass = (s) => (s === "Confirmada" ? "ok" : s === "Cancelada" ? "cancel" : "pre");
   const payClass = (s) => (s === "Pago" ? "ok" : s === "Sinal pago" ? "pre" : "cancel");
@@ -48,7 +51,21 @@
   const bookingBreakdown = (b) => breakdown(b.date, b.extraHours, b.opts || [], b.optManual);
 
   /* ---------- cashback ---------- */
-  const earnedBy = (b) => (b.status === "Confirmada" ? Math.round(Number(b.value || 0) * CASHBACK_PCT) : 0);
+  // base do cashback: diária + horas adicionais (sem limpeza e sem opcionais)
+  function baseAuto(date, extraHours) {
+    try {
+      if (S && S.cashbackBase) { const r = S.cashbackBase({ date, extraHours: extraHours || 0 }); if (r != null) return Number(r.base != null ? r.base : r) || 0; }
+    } catch (e) {}
+    const bd = breakdown(date, extraHours, [], {});
+    return bd.rate + bd.extra;
+  }
+  // total manual ou migrado sem detalhamento: valor − limpeza − opcionais (mínimo 0)
+  function baseManual(value, date, optIds, optManual) {
+    const bd = breakdown(date, 0, optIds, optManual);
+    return Math.max(0, Number(value || 0) - bd.cleaning - bd.optTotal);
+  }
+  const baseOf = (b) => (b.manual ? baseManual(b.value, b.date, b.opts || [], b.optManual) : baseAuto(b.date, b.extraHours));
+  const earnedBy = (b) => (b.status === "Confirmada" ? Math.round(baseOf(b) * CASHBACK_PCT) : 0);
   // crédito do cliente vindo de eventos confirmados anteriores a `date`, menos o já usado em outras reservas
   function cashbackAvailable(client, date, selfId) {
     const k = String(client || "").trim().toLowerCase();
@@ -66,7 +83,7 @@
       id: b.id, client: b.client || "", phone: b.phone || "", type: b.type || "Outro", date: b.date,
       start: b.start || "10:00", end: b.end || "18:00", guests: Number(b.guests) || 0,
       extraHours: Number(b.extraHours) || 0, opts: Array.isArray(b.opts) ? b.opts : [], optManual: b.optManual || {},
-      rules: !!b.rules, manual: b.manual !== undefined ? !!b.manual : true, cashbackUsed: Number(b.cashbackUsed) || 0,
+      term: b.term || "Não assinado", termCode: b.termCode || "", manual: b.manual !== undefined ? !!b.manual : true, cashbackUsed: Number(b.cashbackUsed) || 0,
       value, deposit, status: b.status || "Pré-reserva", notes: b.notes || "",
       pay: b.pay || (value > 0 && deposit >= value ? "Pago" : deposit > 0 ? "Sinal pago" : "Pendente"),
     };
@@ -104,7 +121,7 @@
       const bd = breakdown(date, r[6], optIds, {});
       return {
         id: "seed" + i, client: r[0], phone: "(00) 9" + (8000 + i * 137) + "-" + (1000 + i * 71), type: EVENT_TYPES.includes(r[1]) ? r[1] : EVENT_TYPES[0],
-        date, start: r[3], end: r[4], guests: r[5], extraHours: r[6], opts: optIds, optManual: {}, rules: r[8], manual: false,
+        date, start: r[3], end: r[4], guests: r[5], extraHours: r[6], opts: optIds, optManual: {}, term: r[8] ? "Assinado" : "Não assinado", termCode: r[8] ? "SEED-" + (1000 + i) : "", manual: false,
         cashbackUsed: 0, value: bd.subtotal, deposit: r[9], status: r[10], pay: r[11], notes: r[12],
       };
     });
@@ -194,8 +211,12 @@
         `<span class="rate">${info.holiday ? "★ " : ""}${info.rate ? Number(info.rate).toLocaleString("pt-BR") : ""}</span></span>` +
         evs.slice(0, 2).map((b) => `<span class="chip ${statusClass(b.status)}" title="${esc(b.client)}">${esc(b.client.split(" ")[0])}</span>`).join("") +
         (evs.length > 2 ? `<span class="more">+${evs.length - 2} mais</span>` : "");
-      cell.addEventListener("click", () => { selectedDay = key; renderCalendar(); renderList(); });
-      cell.addEventListener("dblclick", () => openModal(null, key));
+      // o clique simples re-renderiza o calendário e descartaria o dblclick: usa a contagem de cliques
+      cell.addEventListener("click", (e) => {
+        selectedDay = key;
+        if (e.detail >= 2) { renderCalendar(); renderList(); openModal(null, key); return; }
+        renderCalendar(); renderList();
+      });
       cal.appendChild(cell);
     }
   }
@@ -267,7 +288,7 @@
       ? rows.map((b) => `<tr class="row" data-id="${b.id}">
           <td>${parse(b.date).toLocaleDateString("pt-BR")}${b.status !== "Cancelada" && dups[b.date] > 1 ? ' <span class="badge cancel" title="Mais de uma reserva neste dia">⚠ conflito</span>' : ""}<br><small style="color:var(--muted)">${esc(b.start)}–${esc(b.end)}</small></td>
           <td>${esc(b.client)}<br><small style="color:var(--muted)">${esc(b.phone || "")}</small></td>
-          <td>${esc(b.type)}<br><small style="color:var(--muted)">${b.rules ? "regras aceitas" : "regras pendentes"}</small></td>
+          <td>${esc(b.type)}<br><small style="color:var(--muted)">${b.term === "Assinado" ? "termo assinado" + (b.termCode ? " · " + esc(b.termCode) : "") : "termo não assinado"}</small></td>
           <td>${esc(b.guests)}</td>
           <td>${brl(b.value)}<br><small style="color:var(--muted)">${esc(breakdownText(b))}</small></td>
           <td><span class="badge ${payClass(b.pay)}">${esc(b.pay)}</span><br><small style="color:var(--muted)">sinal ${brl(b.deposit)}</small></td>
@@ -286,7 +307,7 @@
   const f = {
     id: $("#b-id"), client: $("#b-client"), phone: $("#b-phone"), type: $("#b-type"),
     date: $("#b-date"), start: $("#b-start"), end: $("#b-end"), guests: $("#b-guests"), extra: $("#b-extra"),
-    rules: $("#b-rules"), value: $("#b-value"), deposit: $("#b-deposit"), pay: $("#b-pay"), status: $("#b-status"),
+    term: $("#b-term"), termCode: $("#b-termcode"), value: $("#b-value"), deposit: $("#b-deposit"), pay: $("#b-pay"), status: $("#b-status"),
     notes: $("#b-notes"), cbUse: $("#b-cb-use"),
   };
   f.type.innerHTML = EVENT_TYPES.map((t) => `<option>${esc(t)}</option>`).join("");
@@ -335,8 +356,10 @@
       if (disc) h += row("Cashback aplicado", "− " + brl(disc), "neg");
       h += row("Total automático", brl(auto), "tot");
       if (manual) h += row("Total ajustado manualmente", brl(f.value.value), "manual");
-      const gen = Math.round((Number(f.value.value) || 0) * CASHBACK_PCT);
-      h += `<div class="q-note">Esta reserva gera ${brl(gen)} (${Math.round(CASHBACK_PCT * 100)}%) de cashback para o próximo evento${f.status.value === "Confirmada" ? "." : " depois de confirmada."}</div>`;
+      const base = manual ? baseManual(f.value.value, date, selectedOpts(), manualOpts()) : baseAuto(date, extraH);
+      const gen = Math.round(base * CASHBACK_PCT);
+      h += row(`Base do cashback (${manual ? "total − limpeza − opcionais" : "diária + horas adicionais"})`, brl(base), "base");
+      h += `<div class="q-note">Esta reserva gera ${brl(gen)} (${Math.round(CASHBACK_PCT * 100)}% da base) de cashback para o próximo evento${f.status.value === "Confirmada" ? "." : " depois de confirmada."}</div>`;
     }
     $("#b-quote").innerHTML = h;
   }
@@ -354,7 +377,8 @@
     f.end.value = b ? b.end : "18:00";
     f.guests.value = b ? b.guests : 50;
     f.extra.value = b ? b.extraHours || 0 : 0;
-    f.rules.checked = b ? !!b.rules : false;
+    f.term.value = b ? b.term : "Não assinado";
+    f.termCode.value = b ? b.termCode || "" : "";
     f.deposit.value = b ? b.deposit : 0;
     f.pay.value = b ? b.pay : "Pendente";
     f.status.value = b ? b.status : "Pré-reserva";
@@ -387,7 +411,8 @@
   function closeModal() {
     $("#modal").classList.remove("on");
     $("#b-err").classList.remove("on");
-    if (opener && document.contains(opener)) opener.focus();
+    const back = opener && document.contains(opener) && opener.offsetParent !== null ? opener : document.querySelector(".topbar [data-new]");
+    if (back) back.focus();
     opener = null;
   }
   const modalOpen = () => $("#modal").classList.contains("on");
@@ -469,7 +494,7 @@
       id: f.id.value, client: f.client.value.trim(), phone: f.phone.value.trim(), type: f.type.value, date,
       start: f.start.value, end: f.end.value, guests: Number(f.guests.value) || 0,
       extraHours: Math.max(0, Number(f.extra.value) || 0), opts: selectedOpts(), optManual: manualOpts(),
-      rules: f.rules.checked, manual, cashbackUsed: f.cbUse.checked ? Math.min(avail, bd.subtotal) : 0,
+      term: f.term.value, termCode: f.termCode.value.trim(), manual, cashbackUsed: f.cbUse.checked ? Math.min(avail, bd.subtotal) : 0,
       value: Number(f.value.value) || 0, deposit: Number(f.deposit.value) || 0, pay: f.pay.value,
       status: f.status.value, notes: f.notes.value.trim(),
     };
@@ -485,8 +510,8 @@
     const d = parse(data.date);
     view = new Date(d.getFullYear(), d.getMonth(), 1);
     selectedDay = data.date;
-    closeModal();
     render();
+    closeModal();
     showToast(isNew ? `Reserva de ${esc(data.client)} criada ✦` : "Reserva atualizada ✦");
   });
 
@@ -496,8 +521,8 @@
     if (!b || !confirm(`Excluir a reserva de ${b.client}?`)) return;
     bookings = bookings.filter((x) => x.id !== id);
     save();
-    closeModal();
     render();
+    closeModal();
     showToast("Reserva excluída.");
   });
 })();

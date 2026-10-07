@@ -144,9 +144,10 @@
         <div class="field"><label for="b-guests">Convidados</label><input id="b-guests" type="number" min="1" value="50"></div>
         <div class="field"><label for="b-extra">Horas adicionais</label><input id="b-extra" type="number" min="0" step="1" value="0"></div>
         <div class="field full"><label>Opcionais</label><div class="opts" id="b-opts"></div></div>
-        <div class="field full">
-          <label class="check"><input type="checkbox" id="b-rules"> Cliente aceitou as regras da casa</label>
+        <div class="field"><label for="b-term">Termo de aceite</label>
+          <select id="b-term"><option>Não assinado</option><option>Assinado</option></select>
         </div>
+        <div class="field"><label for="b-termcode">Código de aceite (opcional)</label><input id="b-termcode" placeholder="Código do contrato.html" autocomplete="off"></div>
 
         <div class="quote" id="b-quote" aria-live="polite"></div>
 

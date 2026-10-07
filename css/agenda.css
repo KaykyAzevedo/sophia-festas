@@ -176,6 +176,7 @@ tr.row:hover td { background: rgba(47,123,255,.06); }
 .q-row.neg b { color: #8fe0b0; }
 .q-row.tot { border-top: 1px solid var(--line); padding-top: .4rem; margin-top: .2rem; }
 .q-row.tot b { font-size: 1.05rem; }
+.q-row.base { color: var(--blue-ice); }
 .q-row.manual b { color: #ffd28a; }
 .q-note { font-size: .72rem; color: var(--blue-ice); margin-top: .3rem; }
 

@@ -40,9 +40,12 @@
       "2026-05-01", // Dia do Trabalho
       "2026-05-10", // Dia das Mães
       "2026-06-04", // Corpus Christi
+      "2026-06-12", // Dia dos Namorados
+      "2026-06-24", // São João
       "2026-08-09", // Dia dos Pais
       "2026-09-07", // Independência
       "2026-10-12", // N. Sra. Aparecida / Dia das Crianças
+      "2026-10-31", // Halloween
       "2026-11-02", // Finados
       "2026-11-15", // Proclamação da República
       "2026-11-20", // Consciência Negra
@@ -58,9 +61,12 @@
       "2027-05-01",
       "2027-05-09", // Dia das Mães
       "2027-05-27", // Corpus Christi
+      "2027-06-12", // Dia dos Namorados
+      "2027-06-24", // São João
       "2027-08-08", // Dia dos Pais
       "2027-09-07",
       "2027-10-12", // N. Sra. Aparecida / Dia das Crianças
+      "2027-10-31", // Halloween
       "2027-11-02",
       "2027-11-15",
       "2027-11-20",
@@ -111,6 +117,12 @@
       if (S.isHoliday(fmt(next))) tier = "friday";
       if (dow === 0 || dow === 6 || S.isHoliday(fmt(d))) tier = "weekend";
       return { rate: S.RATES[tier], tier };
+    },
+
+    // base do cashback: diária + horas adicionais (sem taxa de limpeza e sem opcionais)
+    cashbackBase({ date, extraHours } = {}) {
+      const q = S.quote({ date, extraHours });
+      return q.rate + q.extra;
     },
 
     // opcionais não entram no total (valor sob consulta)
