@@ -153,6 +153,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .nav-logo { display: flex; align-items: center; gap: .5rem; }
 .nav-logo .logo-mark { height: 46px; width: auto; }
+.nav-logo { min-width: 102px; min-height: 46px; } /* reserva o espaço antes do SVG ser injetado (sem salto de layout) */
+.hero [data-logo="big"] { width: min(640px, 92vw); aspect-ratio: 592 / 318; margin: 0 auto; }
 .nav-links { display: flex; gap: 1.4rem; list-style: none; align-items: center; }
 .nav-links a {
   font-family: var(--font-display); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
@@ -319,6 +321,8 @@ section { padding: clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 3rem); position: rel
 .fig-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin: 3rem auto 0; max-width: 980px; }
 .photo-fig { margin: 0; border-radius: 14px; overflow: hidden; position: relative; text-align: left; box-shadow: 0 0 0 1px rgba(201,209,220,.18); }
 .photo-fig.single { max-width: 720px; margin: 2.5rem auto 0; }
+.photo-fig picture, .gallery .g picture { display: block; }
+.lb picture { display: contents; }
 .photo-fig img, .gallery .g img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
 .photo-fig figcaption, .g-cap {
   position: absolute; left: 0; right: 0; bottom: 0; padding: 2.2rem 1rem .8rem;

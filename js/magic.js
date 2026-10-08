@@ -171,7 +171,7 @@
   /* ---------- lightbox da galeria ---------- */
   const thumbs = [...document.querySelectorAll("[data-lightbox]")];
   if (thumbs.length) {
-    let lb, imgEl, capEl, idx = 0, opener = null;
+    let lb, imgEl, srcEl, capEl, idx = 0, opener = null;
     const build = () => {
       lb = document.createElement("div");
       lb.className = "lb";
@@ -181,10 +181,11 @@
       lb.hidden = true;
       lb.innerHTML = '<button type="button" class="lb-close" aria-label="Fechar">&times;</button>' +
         '<button type="button" class="lb-prev" aria-label="Foto anterior">&#8249;</button>' +
-        '<figure><img alt=""><figcaption></figcaption></figure>' +
+        '<figure><picture><source type="image/webp"><img alt=""></picture><figcaption></figcaption></figure>' +
         '<button type="button" class="lb-next" aria-label="Próxima foto">&#8250;</button>';
       document.body.appendChild(lb);
       imgEl = lb.querySelector("img");
+      srcEl = lb.querySelector("source");
       capEl = lb.querySelector("figcaption");
       lb.addEventListener("click", (e) => { if (e.target === lb) close(); }); // clique fora da foto
       lb.querySelector(".lb-close").addEventListener("click", close);
@@ -194,7 +195,9 @@
     const show = (i) => {
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx], im = t.querySelector("img"), cap = t.querySelector(".g-cap");
-      imgEl.src = im.currentSrc || im.src;
+      const jpg = im.getAttribute("src"); // img/<nome>.jpg
+      srcEl.srcset = jpg.replace(/\.jpg$/, "-1448.webp"); // versão grande (WebP) com fallback JPEG
+      imgEl.src = jpg;
       imgEl.alt = im.alt;
       capEl.textContent = cap ? cap.textContent : "";
     };
