@@ -13,7 +13,6 @@
 
   const S = window.SOPHIA;
   if (!S) console.error("js/config.js não carregou: window.SOPHIA indefinido.");
-  const CASHBACK_PCT = (S && S.CASHBACK_PCT) || 0;
   const OPTIONALS = (S && S.OPTIONALS) || [];
   const EVENT_TYPES = ((S && S.EVENT_TYPES) || ["Outro"]).map((t) => (typeof t === "string" ? t : t.label || t.id));
 
@@ -29,14 +28,13 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const statusClass = (s) => (s === "Confirmada" ? "ok" : s === "Cancelada" ? "cancel" : "pre");
   const payClass = (s) => (s === "Pago" ? "ok" : s === "Sinal pago" ? "pre" : "cancel");
-  const clientKey = (b) => String(b.client || "").trim().toLowerCase();
 
   /* ---------- preço (SOPHIA.quote) ---------- */
   function dayInfo(date) {
     try { if (S && date) { const r = S.dayRate(date); if (!r) throw 0; return { rate: r.rate, holiday: !!S.isHoliday(date) }; } } catch (e) {}
     return { rate: 0, holiday: false };
   }
-  // detalhamento automático de uma reserva (sem desconto de cashback)
+  // detalhamento automático de uma reserva
   function breakdown(date, extraHours, optIds, optManual) {
     let q = { rate: 0, extra: 0, cleaning: 0 };
     try { if (S && date) q = S.quote({ date, extraHours: extraHours || 0, optionals: [] }) || q; } catch (e) {}
@@ -49,40 +47,16 @@
   }
   const bookingBreakdown = (b) => breakdown(b.date, b.extraHours, b.opts || [], b.optManual);
 
-  /* ---------- cashback ---------- */
-  // base do cashback: diária + horas adicionais (sem limpeza e sem opcionais)
-  function baseAuto(date, extraHours) {
-    try {
-      if (S && S.cashbackBase) { const r = S.cashbackBase({ date, extraHours: extraHours || 0 }); if (r != null) return Number(r.base != null ? r.base : r) || 0; }
-    } catch (e) {}
-    const bd = breakdown(date, extraHours, [], {});
-    return bd.rate + bd.extra;
-  }
-  // total manual ou migrado sem detalhamento: valor − limpeza − opcionais (mínimo 0)
-  function baseManual(value, date, optIds, optManual) {
-    const bd = breakdown(date, 0, optIds, optManual);
-    return Math.max(0, Number(value || 0) - bd.cleaning - bd.optTotal);
-  }
-  const baseOf = (b) => (b.manual ? baseManual(b.value, b.date, b.opts || [], b.optManual) : baseAuto(b.date, b.extraHours));
-  const earnedBy = (b) => (b.status === "Confirmada" ? Math.round(baseOf(b) * CASHBACK_PCT) : 0);
-  // crédito do cliente vindo de eventos confirmados anteriores a `date`, menos o já usado em outras reservas
-  function cashbackAvailable(client, date, selfId) {
-    const k = String(client || "").trim().toLowerCase();
-    if (!k || !date) return 0;
-    const mine = bookings.filter((b) => b.id !== selfId && clientKey(b) === k);
-    const earned = mine.filter((b) => b.date < date).reduce((s, b) => s + earnedBy(b), 0);
-    const used = mine.filter((b) => b.status !== "Cancelada").reduce((s, b) => s + Number(b.cashbackUsed || 0), 0);
-    return Math.max(0, earned - used);
-  }
-
   /* ---------- armazenamento ---------- */
   function migrate(b) {
     const value = Number(b.value) || 0, deposit = Number(b.deposit) || 0;
+    // reserva antiga com desconto gravado: vira total manual para o valor final não mudar ao reabrir/editar
+    const legacyDiscount = Number(b.cashbackUsed) > 0;
     return {
       id: b.id, client: b.client || "", phone: b.phone || "", type: b.type || "Outro", date: b.date,
       start: b.start || "10:00", end: b.end || "18:00", guests: Number(b.guests) || 0,
       extraHours: Number(b.extraHours) || 0, opts: Array.isArray(b.opts) ? b.opts : [], optManual: b.optManual || {},
-      term: b.term || "Não assinado", termCode: b.termCode || "", manual: b.manual !== undefined ? !!b.manual : true, cashbackUsed: Number(b.cashbackUsed) || 0,
+      term: b.term || "Não assinado", termCode: b.termCode || "", manual: legacyDiscount || (b.manual !== undefined ? !!b.manual : true),
       value, deposit, status: b.status || "Pré-reserva", notes: b.notes || "",
       pay: b.pay || (value > 0 && deposit >= value ? "Pago" : deposit > 0 ? "Sinal pago" : "Pendente"),
     };
@@ -112,7 +86,7 @@
       ["Pedro Santos", "Aniversário", 13, "16:00", "00:00", 100, 0, [], true, 600, "Confirmada", "Sinal pago", "40 anos."],
       ["Camila Rocha", "Aniversário", -3, "12:00", "20:00", 40, 0, [], true, 0, "Confirmada", "Pago", ""],
       ["Família Moreira", "Aniversário", 16, "10:00", "18:00", 70, 0, [], false, 0, "Cancelada", "Pendente", "Cancelado pelo cliente."],
-      ["Camila Rocha", "Aniversário", 20, "12:00", "20:00", 60, 0, [], true, 0, "Pré-reserva", "Pendente", "Cliente recorrente — cashback."],
+      ["Camila Rocha", "Aniversário", 20, "12:00", "20:00", 60, 0, [], true, 0, "Pré-reserva", "Pendente", "Cliente recorrente."],
     ];
     return list.map((r, i) => {
       const date = at(r[2]);
@@ -121,7 +95,7 @@
       return {
         id: "seed" + i, client: r[0], phone: "(00) 9" + (8000 + i * 137) + "-" + (1000 + i * 71), type: EVENT_TYPES.includes(r[1]) ? r[1] : EVENT_TYPES[0],
         date, start: r[3], end: r[4], guests: r[5], extraHours: r[6], opts: optIds, optManual: {}, term: r[8] ? "Assinado" : "Não assinado", termCode: r[8] ? "SEED-" + (1000 + i) : "", manual: false,
-        cashbackUsed: 0, value: bd.subtotal, deposit: r[9], status: r[10], pay: r[11], notes: r[12],
+        value: bd.subtotal, deposit: r[9], status: r[10], pay: r[11], notes: r[12],
       };
     });
   }
@@ -269,7 +243,6 @@
     if (bd.extra) parts.push(`+${b.extraHours}h extra ${brl(bd.extra)}`);
     if (bd.cleaning) parts.push(`limpeza ${brl(bd.cleaning)}`);
     if (bd.optTotal) parts.push(`opcionais ${brl(bd.optTotal)}`);
-    if (b.cashbackUsed) parts.push(`cashback −${brl(b.cashbackUsed)}`);
     return parts.join(" · ");
   }
 
@@ -307,7 +280,7 @@
     id: $("#b-id"), client: $("#b-client"), phone: $("#b-phone"), type: $("#b-type"),
     date: $("#b-date"), start: $("#b-start"), end: $("#b-end"), guests: $("#b-guests"), extra: $("#b-extra"),
     term: $("#b-term"), termCode: $("#b-termcode"), value: $("#b-value"), deposit: $("#b-deposit"), pay: $("#b-pay"), status: $("#b-status"),
-    notes: $("#b-notes"), cbUse: $("#b-cb-use"),
+    notes: $("#b-notes"),
   };
   f.type.innerHTML = EVENT_TYPES.map((t) => `<option>${esc(t)}</option>`).join("");
   $("#b-opts").innerHTML = OPTIONALS.map((o) => `<div class="opt" data-opt="${esc(o.id)}">
@@ -324,7 +297,7 @@
     return o;
   };
 
-  // recalcula detalhamento, cashback e (se não estiver manual) o total
+  // recalcula detalhamento e (se não estiver manual) o total
   function recalc() {
     $$("#b-opts .opt").forEach((el) => {
       const v = el.querySelector(".opt-val");
@@ -334,14 +307,8 @@
     const extraH = Math.max(0, Number(f.extra.value) || 0);
     const bd = breakdown(date, extraH, selectedOpts(), manualOpts());
     const info = dayInfo(date);
-    const avail = cashbackAvailable(f.client.value, date, f.id.value);
-    const disc = f.cbUse.checked ? Math.min(avail, bd.subtotal) : 0;
-    const auto = Math.max(0, bd.subtotal - disc);
+    const auto = bd.subtotal;
     if (!manual) f.value.value = auto;
-    f.cbUse.disabled = avail <= 0 && !f.cbUse.checked;
-    $("#b-cb-info").textContent = avail > 0
-      ? `Crédito disponível: ${brl(avail)}${disc ? ` (aplicando ${brl(disc)})` : ""}`
-      : "Sem crédito disponível para este cliente.";
     $("#b-recalc").style.display = manual ? "" : "none";
 
     const row = (l, v, cls) => `<div class="q-row ${cls || ""}"><span>${l}</span><b>${v}</b></div>`;
@@ -352,13 +319,8 @@
       h += row(`Horas adicionais${extraH ? ` (${extraH}h)` : ""}`, brl(bd.extra));
       h += row("Taxa de limpeza", brl(bd.cleaning));
       bd.opts.forEach((o) => { h += row(esc(o.label) + (o.tbd ? " (a combinar)" : ""), brl(o.price)); });
-      if (disc) h += row("Cashback aplicado", "− " + brl(disc), "neg");
       h += row("Total automático", brl(auto), "tot");
       if (manual) h += row("Total ajustado manualmente", brl(f.value.value), "manual");
-      const base = manual ? baseManual(f.value.value, date, selectedOpts(), manualOpts()) : baseAuto(date, extraH);
-      const gen = Math.round(base * CASHBACK_PCT);
-      h += row(`Base do cashback (${manual ? "total − limpeza − opcionais" : "diária + horas adicionais"})`, brl(base), "base");
-      h += `<div class="q-note">Esta reserva gera ${brl(gen)} (${Math.round(CASHBACK_PCT * 100)}% da base) de cashback para o próximo evento${f.status.value === "Confirmada" ? "." : " depois de confirmada."}</div>`;
     }
     $("#b-quote").innerHTML = h;
   }
@@ -382,7 +344,6 @@
     f.pay.value = b ? b.pay : "Pendente";
     f.status.value = b ? b.status : "Pré-reserva";
     f.notes.value = b ? b.notes || "" : "";
-    f.cbUse.checked = !!(b && b.cashbackUsed > 0);
     $$("#b-opts .opt").forEach((el) => {
       const id = el.dataset.opt, on = !!(b && (b.opts || []).includes(id));
       el.querySelector("input[type=checkbox]").checked = on;
@@ -465,7 +426,6 @@
 
   ["start", "end"].forEach((k) => f[k].addEventListener("input", checkDuration));
   ["date", "extra", "status", "client"].forEach((k) => f[k].addEventListener("input", () => { recalc(); checkConflict(); }));
-  f.cbUse.addEventListener("change", recalc);
   $("#b-opts").addEventListener("input", recalc);
   f.value.addEventListener("input", () => { manual = true; recalc(); });
   $("#b-recalc").addEventListener("click", () => { manual = false; recalc(); });
@@ -487,13 +447,11 @@
     e.preventDefault();
     if (conflicts().length && !confirm("A casa já tem reserva nesta data. Salvar mesmo assim?")) return;
     const date = f.date.value;
-    const bd = breakdown(date, Number(f.extra.value) || 0, selectedOpts(), manualOpts());
-    const avail = cashbackAvailable(f.client.value, date, f.id.value);
     const data = {
       id: f.id.value, client: f.client.value.trim(), phone: f.phone.value.trim(), type: f.type.value, date,
       start: f.start.value, end: f.end.value, guests: Number(f.guests.value) || 0,
       extraHours: Math.max(0, Number(f.extra.value) || 0), opts: selectedOpts(), optManual: manualOpts(),
-      term: f.term.value, termCode: f.termCode.value.trim(), manual, cashbackUsed: f.cbUse.checked ? Math.min(avail, bd.subtotal) : 0,
+      term: f.term.value, termCode: f.termCode.value.trim(), manual,
       value: Number(f.value.value) || 0, deposit: Number(f.deposit.value) || 0, pay: f.pay.value,
       status: f.status.value, notes: f.notes.value.trim(),
     };

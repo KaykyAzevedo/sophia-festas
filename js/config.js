@@ -25,7 +25,6 @@
     HOURS_INCLUDED: 8,
     EXTRA_HOUR_PCT: 0.10,   // hora adicional = 10% da diária
     CLEANING_FEE: 150,      // cobrada à parte
-    CASHBACK_PCT: 0.40,     // desconto no próximo evento
 
     // Feriados nacionais e datas comemorativas (2026 e 2027) — tratadas como "weekend".
     // ATENÇÃO: a lista só cobre até 2027-12-31; precisa ser estendida (e HOLIDAYS_MAX atualizado) para datas posteriores.
@@ -117,12 +116,6 @@
       if (S.isHoliday(fmt(next))) tier = "friday";
       if (dow === 0 || dow === 6 || S.isHoliday(fmt(d))) tier = "weekend";
       return { rate: S.BASE_PRICE, tier };
-    },
-
-    // base do cashback: diária + horas adicionais (sem taxa de limpeza e sem opcionais)
-    cashbackBase({ date, extraHours } = {}) {
-      const q = S.quote({ date, extraHours });
-      return q.rate + q.extra;
     },
 
     // opcionais não entram no total (valor sob consulta)

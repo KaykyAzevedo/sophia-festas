@@ -189,17 +189,29 @@
       capEl = lb.querySelector("figcaption");
       lb.addEventListener("click", (e) => { if (e.target === lb) close(); }); // clique fora da foto
       lb.querySelector(".lb-close").addEventListener("click", close);
-      lb.querySelector(".lb-prev").addEventListener("click", () => show(idx - 1));
-      lb.querySelector(".lb-next").addEventListener("click", () => show(idx + 1));
+      lb.querySelector(".lb-prev").addEventListener("click", () => show(idx - 1, -1));
+      lb.querySelector(".lb-next").addEventListener("click", () => show(idx + 1, 1));
+      // swipe no celular
+      let sx = 0, sy = 0, tracking = false;
+      lb.addEventListener("pointerdown", (e) => { if (e.target.closest("button")) return; tracking = true; sx = e.clientX; sy = e.clientY; });
+      lb.addEventListener("pointerup", (e) => { if (!tracking) return; tracking = false; const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) show(idx + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
+      lb.addEventListener("pointercancel", () => { tracking = false; });
     };
-    const show = (i) => {
+    const reduceLb = reduce;
+    const show = (i, dir) => {
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx], im = t.querySelector("img"), cap = t.querySelector(".g-cap");
       const jpg = im.getAttribute("src"); // img/<nome>.jpg
-      srcEl.srcset = jpg.replace(/\.jpg$/, "-1448.webp"); // versão grande (WebP) com fallback JPEG
-      imgEl.src = jpg;
-      imgEl.alt = im.alt;
-      capEl.textContent = cap ? cap.textContent : "";
+      const apply = () => {
+        srcEl.srcset = jpg.replace(/\.jpg$/, "-1448.webp"); // versão grande (WebP) com fallback JPEG
+        imgEl.src = jpg;
+        imgEl.alt = im.alt;
+        capEl.innerHTML = '<span class="lb-count">' + (idx + 1) + " / " + thumbs.length + "</span>" + (cap ? cap.textContent : "");
+        requestAnimationFrame(() => imgEl.classList.remove("swap"));
+        // pré-carrega as vizinhas (setas/swipe sem espera)
+        [idx - 1, idx + 1].forEach((k) => { const n = thumbs[(k + thumbs.length) % thumbs.length].querySelector("img"); if (n) { const pre = new Image(); pre.src = n.getAttribute("src").replace(/\.jpg$/, "-1448.webp"); } });
+      };
+      if (dir && !reduceLb) { imgEl.classList.add("swap"); setTimeout(apply, 180); } else apply();
     };
     const open = (i, from) => {
       if (!lb) build();
@@ -221,8 +233,8 @@
     addEventListener("keydown", (e) => {
       if (!lb || lb.hidden) return;
       if (e.key === "Escape") close();
-      else if (e.key === "ArrowLeft") show(idx - 1);
-      else if (e.key === "ArrowRight") show(idx + 1);
+      else if (e.key === "ArrowLeft") show(idx - 1, -1);
+      else if (e.key === "ArrowRight") show(idx + 1, 1);
       else if (e.key === "Tab") { // mantém o foco dentro do diálogo
         const f = [...lb.querySelectorAll("button")];
         const first = f[0], last = f[f.length - 1];

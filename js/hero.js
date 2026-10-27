@@ -19,7 +19,6 @@
   /* ---------- dados do config (fonte única) ---------- */
   const CFG = {
     BASE_PRICE: () => S.BASE_PRICE,
-    CASHBACK: () => Math.round((S.CASHBACK_PCT || 0) * 100),
     HOURS: () => S.HOURS_INCLUDED,
     INCLUDED: () => (S.INCLUDED || []).length,
     EXTRA_PCT: () => Math.round((S.EXTRA_HOUR_PCT || 0) * 100),
@@ -90,20 +89,6 @@
       if (e.isIntersecting) { cIO.unobserve(e.target); setTimeout(() => runCount(e.target), root.classList.contains("go") ? 0 : WAIT - 300); }
     }), { threshold: 0.4 });
     counters.forEach((el) => cIO.observe(el));
-  }
-
-  /* ---------- botões magnéticos ---------- */
-  if (!reduce && fine) {
-    $$("[data-magnetic]").forEach((b) => {
-      let raf = 0, tx = 0, ty = 0;
-      const set = () => { raf = 0; b.style.setProperty("--mx", tx.toFixed(1) + "px"); b.style.setProperty("--my", ty.toFixed(1) + "px"); };
-      addEventListener("pointermove", (e) => {
-        const r = b.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-        const dx = e.clientX - cx, dy = e.clientY - cy, dist = Math.hypot(dx, dy), reach = Math.max(r.width, r.height) * 0.9;
-        if (dist < reach) { tx = dx * 0.28; ty = dy * 0.38; } else if (!tx && !ty) return; else { tx = ty = 0; }
-        if (!raf) raf = requestAnimationFrame(set);
-      }, { passive: true });
-    });
   }
 
   /* ---------- rastro de estrelas no cursor ---------- */

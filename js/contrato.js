@@ -25,16 +25,14 @@
       "Taxa de limpeza: " + brl(S.CLEANING_FEE) + ", cobrada à parte.",
       "Opcionais (" + S.OPTIONALS.map((o) => o.label.toLowerCase()).join(", ") + "): valor sob consulta.",
     ]) +
-    "<h3>5. Cashback</h3><p>O locatário recebe " + pct(S.CASHBACK_PCT) + " do valor da diária (diária e horas adicionais, <strong>sem a taxa de limpeza</strong>) como desconto no próximo evento. " +
-    "Condições (validade, cumulatividade, etc.): " + TBD("regras do cashback") + ".</p>" +
-    "<h3>6. Regras de uso</h3>" + li(S.RULES) +
-    "<h3>7. Responsabilidade por danos</h3>" +
+    "<h3>5. Regras de uso</h3>" + li(S.RULES) +
+    "<h3>6. Responsabilidade por danos</h3>" +
     "<p>" + TBD("regras de responsabilidade por danos, a informar pela locadora") + ".</p>" +
-    "<h3>8. Assinatura, pagamento e confirmação</h3>" +
+    "<h3>7. Assinatura, pagamento e confirmação</h3>" +
     "<p>Este termo deve ser assinado antes do pagamento. A disponibilidade da data é confirmada pelo WhatsApp. " +
     "Forma de pagamento: " + TBD("forma de pagamento") + ". Sinal: " + TBD("sinal") + ". Condições de confirmação da reserva: " + TBD("condições de confirmação") + ".</p>" +
-    "<h3>9. Cancelamento e remarcação</h3><p>Política de cancelamento, remarcação e devolução de valores: " + TBD("política de cancelamento") + ".</p>" +
-    "<h3>10. Aceite eletrônico</h3><p>O locatário declara ter lido e concordado com este termo ao marcar o aceite e digitar o próprio nome completo como assinatura. " +
+    "<h3>8. Cancelamento e remarcação</h3><p>Política de cancelamento, remarcação e devolução de valores: " + TBD("política de cancelamento") + ".</p>" +
+    "<h3>9. Aceite eletrônico</h3><p>O locatário declara ter lido e concordado com este termo ao marcar o aceite e digitar o próprio nome completo como assinatura. " +
     "Trata-se de aceite eletrônico simples. Foro: " + TBD("foro") + ".</p>";
 
   /* ---------- formulário ---------- */

@@ -13,12 +13,13 @@ HTML + CSS + JavaScript puro. Fontes Google (Great Vibes, Cinzel, Cormorant Gara
 - `index.html` — landing: hero, a casa, diárias, incluso, opcionais, tipos de evento, regras, galeria (placeholders), orçamento com estimativa ao vivo, balão de WhatsApp
 - `agenda.html` — área da equipe (login demo → calendário, lista de reservas, CRUD) para a casa única; storage `sophia.bookings.v2`
 - `contrato.html` + `js/contrato.js` — termo de locação gerado a partir de SOPHIA, com aceite eletrônico simples (sem back end): CPF validado, assinatura digitada igual ao nome, comprovante com código de aceite, impressão/PDF e envio por WhatsApp. Aceita `?date=YYYY-MM-DD&type=...` para pré-preencher.
-- `js/config.js` — FONTE ÚNICA (`window.SOPHIA`): WhatsApp, diárias, horas incluídas, hora extra, taxa de limpeza, cashback, feriados/datas comemorativas, opcionais, tipos de evento, itens inclusos, regras e as funções `isHoliday`, `dayRate`, `quote`, `cashbackBase`. Landing e agenda dependem dele.
+- `js/config.js` — FONTE ÚNICA (`window.SOPHIA`): WhatsApp, diárias, horas incluídas, hora extra, taxa de limpeza, feriados/datas comemorativas, opcionais, tipos de evento, itens inclusos, regras e as funções `isHoliday`, `dayRate`, `quote`. Landing e agenda dependem dele.
 - `img/` — 9 fotos reais do cliente, em 3 arquivos cada: `<nome>-800.webp` (miniaturas e figuras), `<nome>-1448.webp` (lightbox e hero) e `<nome>.jpg` (fallback 1448px, q80 progressivo). HTML usa `<picture>` (WebP + JPEG), lazy fora do hero; o lightbox abre o WebP de 1448. Originais sem recompressão em D:/SITE VENDER/referencias/fotos-originais/ (fora do repo). Caminhos relativos, sem barra inicial (site em subpasta no GitHub Pages). Total que uma visita carrega: hero ~227 KB; página inteira ~0,95 MB no desktop (era ~2,75 MB). Fotos: fachada (galeria), fachada com carros, recuo, piscina com telão (hero), área externa, salão com mesas, churrasqueira/cozinha, salão para decoração e área de jogos.
 - `css/style.css` — identidade visual compartilhada; `css/agenda.css` — painel
 - `js/brand.js` — logo OFICIAL redesenhada em SVG (referência do cliente fora do repositório, em D:/SITE VENDER/referencias/logo-original.jpeg): Sophia em Great Vibes, borboleta monarca azul de perfil, estrela de 8 pontas com 4 estrelinhas e FESTAS em Cinzel. Branca, para fundo escuro; classes `.sf-word/.sf-sub/.sf-star` permitem versão escura (usada na impressão do contrato). Mesma borboleta nas borboletinhas do magic.js.
 - `js/magic.js` — estrelas, borboletas, brilho do cursor, nav (aria/Esc), reveal, toast
 - `css/hero.css` + `js/hero.js` — hero cinematográfico: slideshow Ken Burns de 5 fotos reais, logo com reveal, selo "a partir de R$ 950", faixa de destaques, parallax, 9 borboletas em camadas (4 no celular), nav translúcida; balão do WhatsApp só aparece após rolar o hero
+- `css/sections.css` + `js/sections.js` + `js/eventos.js` — seções do index (A casa, Incluso, Opcionais, Regras, Galeria, Orçamento, CTA final, Rodapé) e bento de eventos com filtro e pré-seleção do tipo no formulário; botões sem efeito magnético (só hover discreto)
 - `js/agenda.js` — lógica da agenda
 
 ## Preços (em config.js)
@@ -26,7 +27,7 @@ HTML + CSS + JavaScript puro. Fontes Google (Great Vibes, Cinzel, Cormorant Gara
 - Datas comemorativas (2026 e 2027, marcadas com ★ na agenda) incluem Dia dos Namorados (12/06), São João (24/06) e Halloween (31/10), além de Dia das Mães, Dia dos Pais, Dia das Crianças, Natal e Réveillon
 - 8 horas incluídas; hora adicional = 10% da diária (a confirmar com a dona) (sujeita a disponibilidade)
 - Taxa de limpeza R$ 150,00 à parte
-- Cashback (decisão do cliente, 2026-10-26): 40% sobre diária + horas adicionais, SEM taxa de limpeza e sem opcionais; vira desconto no próximo evento. `SOPHIA.cashbackBase({date, extraHours})` devolve a base. Validade/cumulatividade ainda a definir
+- Cashback: DESCONTINUADO em 2026-10-27 (decisão do cliente). Removido do site, do termo (contrato.js, cláusulas renumeradas), do config (`CASHBACK_PCT`, `cashbackBase`) e da agenda. Não reintroduzir sem nova decisão
 - Opcionais (telão, rede de futevôlei, piscina aquecida): valor sob consulta, não entram no total
 
 ## Decisões importantes
@@ -49,7 +50,7 @@ Não adicionar back end até aprovação da ideia. Fotos reais em img/ (WebP + J
 
 ## Pendências
 - WhatsApp real definido: 5521998172874. Endereço: Estrada do Mendanha, 6271. Pendentes: preço dos opcionais, back end com contas de admin, fotos reais e contrato de regras (Bruna)
-- Dados do termo marcados "A DEFINIR" em contrato.html: dados da locadora, endereço do imóvel, forma de pagamento/sinal, política de cancelamento, procedimento de danos, regras do cashback, foro
+- Dados do termo marcados "A DEFINIR" em contrato.html: dados da locadora, endereço do imóvel, forma de pagamento/sinal, política de cancelamento, procedimento de danos, foro
 - Medidas (piscina, área externa), endereço e mapa — marcados "a confirmar" no site
 - Confirmar com a dona se ping-pong e espaço infantil (visíveis na foto da área de jogos) entram nos itens inclusos — hoje a legenda é só "Área de jogos"
 - Valores dos opcionais

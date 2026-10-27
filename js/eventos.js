@@ -28,11 +28,11 @@
 
   // [tipo (igual ao config), categoria, ícone, frase, foto (opcional: nome do arquivo em img/), destaque grande]
   const EV = [
-    ["Noite de cinema", "amigos", "cinema", "Telão opcional junto à piscina e som JBL para uma sessão ao ar livre.", "piscina-telao", true],
-    ["Dia de futebol com os amigos", "amigos", "futebol", "Televisão, som JBL e frigobar para acompanhar o jogo com a turma.", null, false],
+    ["Evento familiar", "familia", "familia", "Piscina, churrasqueira e mesas para reunir a família.", "area-externa-piscina", true],
+    ["Dia de futebol com os amigos", "amigos", "futebol", "Televisão, som JBL e frigobar para acompanhar o jogo com a turma.", "area-jogos", true],
     ["Confraternização", "amigos", "brinde", "Piscina, churrasqueira e jogos de mesa para a turma toda.", "churrasqueira-cozinha", true],
     ["Festa comemorativa", "datas", "festa", "Área para decoração, som JBL e churrasqueira à disposição.", "salao-decoracao", true],
-    ["Evento familiar", "familia", "familia", "Piscina, churrasqueira e mesas para reunir a família.", null, false],
+    ["Noite de cinema", "amigos", "cinema", "Telão opcional junto à piscina e som JBL para uma sessão ao ar livre.", null, false],
     ["Noivado", "familia", "noivado", "Área para decoração e mesas para receber os convidados do seu jeito.", null, false],
     ["Festa de empresa", "empresa", "empresa", "Churrasqueira, mesas e piscina para um dia diferente com a equipe.", null, false],
     ["Evento escolar", "empresa", "escola", "Área externa, mesas e som para o seu evento.", null, false],
@@ -41,8 +41,6 @@
     ["Natal", "datas", "natal", "Mesas, cozinha com fogão industrial e área para decoração.", null, false],
     ["Festa junina", "datas", "junina", "Churrasqueira, cozinha e área para decoração com a sua temática.", null, false],
   ].filter((e) => !S.EVENT_TYPES || S.EVENT_TYPES.indexOf(e[0]) !== -1);
-  // jogos: o 4º destaque é a área de jogos, ligada ao futebol com os amigos
-  EV.forEach((e) => { if (e[0] === "Dia de futebol com os amigos") { e[4] = "area-jogos"; e[5] = true; } });
 
   const CATS = [["todos", "Todos"], ["familia", "Família"], ["amigos", "Amigos"], ["empresa", "Empresa, escola e igreja"], ["datas", "Datas especiais"]];
 
@@ -55,7 +53,7 @@
       : "";
     return '<button type="button" class="ev-card' + (e[5] ? " big" : "") + (e[4] ? " has-photo" : "") + '" data-cat="' + e[1] + '" data-type="' + esc(e[0]) + '" style="--i:' + i + '" aria-pressed="false">' +
       photo + '<span class="ev-ic">' + ICON[e[2]] + "</span>" +
-      '<span class="ev-txt"><b>' + esc(e[0]) + '</b><span class="ev-desc">' + esc(e[3]) + '</span><em class="ev-sel">✓ Tipo selecionado no orçamento</em></span></button>';
+      '<span class="ev-txt"><b>' + esc(e[0]) + '</b><span class="ev-desc">' + esc(e[3]) + '</span></span></button>';
   }).join("");
 
   const cards = [...grid.querySelectorAll(".ev-card")];
@@ -83,17 +81,37 @@
     if (reduce) apply(); else setTimeout(apply, 260);
   });
 
-  // clique/toque: abre a frase e já escolhe o tipo no formulário de orçamento
+  // aviso temporário (toast): um só elemento, reaproveitado; some sozinho em ~2,5 s
+  let toast = null, toastT = 0;
+  const say = (msg) => {
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "ev-toast"; toast.setAttribute("role", "status"); toast.setAttribute("aria-live", "polite");
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    clearTimeout(toastT);
+    void toast.offsetWidth;                     // garante a transição mesmo no 1º aviso
+    toast.classList.add("show");
+    toastT = setTimeout(() => toast.classList.remove("show"), 2500);
+  };
+
+  // clique/toque: escolhe o tipo no formulário de orçamento (estado "selecionado" sutil no card);
+  // em telas sem hover (toque) o toque também mostra a frase do card
+  const touch = matchMedia("(hover: none)").matches;
   grid.addEventListener("click", (e) => {
     const c = e.target.closest(".ev-card"); if (!c) return;
-    const open = !c.classList.contains("open") || !c.classList.contains("sel");
+    const wasSel = c.classList.contains("sel");
     cards.forEach((x) => { x.classList.remove("open", "sel"); x.setAttribute("aria-pressed", "false"); });
-    if (open) { c.classList.add("open", "sel"); c.setAttribute("aria-pressed", "true"); }
+    if (wasSel) return;                         // segundo clique desmarca
+    c.classList.add("sel"); c.setAttribute("aria-pressed", "true");
+    if (touch) c.classList.add("open");
     const sel = document.getElementById("q-type");
-    if (sel && open) {
+    if (sel) {
       sel.value = c.dataset.type;
       sel.dispatchEvent(new Event("change", { bubbles: true }));
-      if (window.showToast) window.showToast("Tipo de evento: " + c.dataset.type);
+      say("Tipo de evento escolhido: " + c.dataset.type);
     }
   });
+  if (touch) document.addEventListener("click", (e) => { if (!e.target.closest(".ev-card")) cards.forEach((x) => x.classList.remove("open")); });
 })();

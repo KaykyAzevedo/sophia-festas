@@ -161,16 +161,12 @@ tr.row:hover td { background: rgba(47,123,255,.06); }
 .opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .6rem 1rem; }
 .opt { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
 .opt .opt-val { width: 96px; padding: .4rem .7rem; }
-.cash small { color: var(--blue-ice); font-size: .72rem; }
 .quote { grid-column: 1 / -1; padding: .9rem 1.1rem; border-radius: 14px; background: rgba(47,123,255,.06); box-shadow: 0 0 0 1px rgba(106,168,255,.25) inset; display: grid; gap: .3rem; }
 .q-row { display: flex; justify-content: space-between; gap: 1rem; font-size: .82rem; color: var(--silver); }
 .q-row b { font-weight: 500; color: #fff; white-space: nowrap; }
-.q-row.neg b { color: #8fe0b0; }
 .q-row.tot { border-top: 1px solid var(--line); padding-top: .4rem; margin-top: .2rem; }
 .q-row.tot b { font-size: 1.05rem; }
-.q-row.base { color: var(--blue-ice); }
 .q-row.manual b { color: #ffd28a; }
-.q-note { font-size: .72rem; color: var(--blue-ice); margin-top: .3rem; }
 
 .view { display: none; }
 .view.on { display: block; }

@@ -9,6 +9,6 @@ Protótipo visual (somente front end) do site de **locação de casa por diária
 - `js/brand.js` — logo oficial redesenhada em SVG (Sophia Festas) e borboleta
 - `js/config.js` — fonte única de preços, feriados, regras, itens inclusos e número de WhatsApp (`window.SOPHIA`)
 
-Diária: a partir de R$ 950 (8 h incluídas; hora extra 10%; limpeza R$ 150). Cashback: 40% da diária (+ horas extras), sem a taxa de limpeza, no próximo evento.
+Diária: a partir de R$ 950 (8 h incluídas; hora extra 10%; limpeza R$ 150). Não há cashback (programa descontinuado em 2026-10-27).
 
 Abra `index.html` no navegador — não precisa de build nem servidor. Veja `PROJECT_STATE.md` para decisões e pendências.
