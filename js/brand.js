@@ -14,7 +14,9 @@
   let uid = 0;
 
   /* ================= borboleta: recorte da própria imagem da logo (img/borboleta.webp, fundo transparente) ================= */
-  const BFLY_SRC = "img/borboleta.webp", BFLY_FALLBACK = "img/borboleta.png", BFLY_W = 480, BFLY_H = 604;
+  // raiz do site a partir do próprio script (funciona também em subpastas, ex.: preview/)
+  const ROOT = document.currentScript && document.currentScript.src ? new URL("../", document.currentScript.src).href : "";
+  const BFLY_SRC = ROOT + "img/borboleta.webp", BFLY_FALLBACK = ROOT + "img/borboleta.png", BFLY_W = 480, BFLY_H = 604;
 
   // borboleta solta (nas seções, no brilho flutuante e no toast)
   function butterflySVG() {
@@ -85,7 +87,7 @@
     });
   }
 
-  window.SophiaBrand = { butterflySVG, logoSVG, name: BRAND_NAME };
+  window.SophiaBrand = { butterflySVG, logoSVG, name: BRAND_NAME, root: ROOT };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
 })();

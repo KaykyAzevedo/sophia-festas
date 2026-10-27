@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" type="image/webp" href="img/piscina-telao-1448.webp" imagesrcset="img/piscina-telao-1448.webp 1448w" imagesizes="100vw" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hero.css">
 </head>
 <body>
   <div class="sky"></div>
@@ -36,21 +37,38 @@
   </nav>
 
   <!-- HERO -->
-  <header class="hero" id="inicio">
-    <picture><source type="image/webp" srcset="img/piscina-telao-1448.webp"><img class="hero-bg" src="img/piscina-telao.jpg" alt="" width="1448" height="1086" fetchpriority="high" decoding="async"></picture>
-    <div class="hero-halo"></div>
-    <div class="hero-ring"></div>
-    <div class="hero-ring r2"></div>
+  <header class="hero hx" id="inicio" data-host>
+    <div class="hx-slides" data-slides data-interval="6500" data-par="0.22" aria-hidden="true">
+        <div class="slide"><picture><source type="image/webp" srcset="img/piscina-telao-1448.webp"><img src="img/piscina-telao.jpg" alt="" width="1448" height="1086" fetchpriority="high" decoding="async"></picture></div>
+        <div class="slide"><picture data-pending><source type="image/webp" data-srcset="img/area-externa-piscina-1448.webp"><img data-src="img/area-externa-piscina.jpg" alt="" width="1448" height="1086" decoding="async"></picture></div>
+        <div class="slide"><picture data-pending><source type="image/webp" data-srcset="img/churrasqueira-cozinha-1448.webp"><img data-src="img/churrasqueira-cozinha.jpg" alt="" width="1448" height="1086" decoding="async"></picture></div>
+        <div class="slide"><picture data-pending><source type="image/webp" data-srcset="img/salao-mesas-1448.webp"><img data-src="img/salao-mesas.jpg" alt="" width="1448" height="1086" decoding="async"></picture></div>
+        <div class="slide"><picture data-pending><source type="image/webp" data-srcset="img/area-jogos-1448.webp"><img data-src="img/area-jogos.jpg" alt="" width="1448" height="1086" decoding="async"></picture></div>
+    </div>
+    <div class="hx-glow" data-mouse="-16"></div>
+    <div class="depth-slot" data-depth="a"></div>
+    <div class="hx-vig"></div>
     <div class="hero-inner">
-      <p class="eyebrow">Casa para alugar por diária</p>
+      <p class="eyebrow" data-rv style="--d:1500ms">Casa para alugar por diária</p>
       <div data-logo="big"></div>
-      <p class="hero-tagline">A casa é sua por um dia inteiro: piscina, churrasqueira e estrutura completa. Você traz a festa, nós cedemos o espaço.</p>
-      <div class="hero-actions">
-        <a href="#contato" class="btn btn-primary">Simular orçamento</a>
-        <a href="#diarias" class="btn btn-ghost">Ver diárias</a>
+      <p class="hx-tag" data-split style="--d:1700ms">A casa é sua por um dia inteiro: piscina, churrasqueira e estrutura completa. Você traz a festa, nós cedemos o espaço.</p>
+      <div class="hx-actions">
+        <a href="#contato" class="btn btn-primary" data-magnetic data-rv style="--d:2100ms">Simular orçamento</a>
+        <a href="#diarias" class="btn btn-ghost" data-magnetic data-rv style="--d:2250ms">Ver diárias</a>
       </div>
     </div>
-    <div class="scroll-hint">DESCUBRA</div>
+    <div class="seal hx-seal" data-rv style="--d:2300ms">
+      <span class="seal-bg"></span><svg class="seal-ring" viewBox="0 0 148 148" aria-hidden="true"><defs><path id="seal-path" d="M74,74 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs><text><textPath href="#seal-path" startOffset="0">A PARTIR DE • A PARTIR DE • A PARTIR DE • </textPath></text></svg>
+      <div class="seal-in"><small>diária</small><b><i>R$</i><span data-count data-cfg="BASE_PRICE">950</span></b><small>a partir de</small></div>
+    </div>
+    <div class="hx-ticks" aria-hidden="true"><i data-tick></i><i data-tick></i><i data-tick></i><i data-tick></i><i data-tick></i></div>
+    <ul class="hx-strip">
+      <li data-rv style="--d:2400ms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15c3 0 3-3 6-3s3 3 6 3 3-3 6-3M3 20c3 0 3-3 6-3s3 3 6 3 3-3 6-3M8 12V5a2 2 0 0 1 4 0M14 12V5a2 2 0 0 1 4 0"/></svg><span><b>Piscina grande</b><em>área externa</em></span></li>
+      <li data-rv style="--d:2520ms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg><span><b>Churrasqueira</b><em>com cozinha</em></span></li>
+      <li data-rv style="--d:2640ms"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="14.5" r="3.5"/><circle cx="12" cy="7.5" r="1"/></svg><span><b>Som JBL</b><em>sistema de som</em></span></li>
+      <li data-rv style="--d:2760ms"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><b><span data-count data-cfg="HOURS">8</span> horas de diária</b><em>incluídas</em></span></li>
+    </ul>
+    <a class="scroll-ind" href="#essencia" aria-label="Rolar para baixo" data-rv style="--d:2900ms"></a>
   </header>
 
   <!-- ESSÊNCIA -->
@@ -257,6 +275,7 @@
   <script src="js/config.js"></script>
   <script src="js/brand.js"></script>
   <script src="js/magic.js"></script>
+  <script src="js/hero.js"></script>
   <script>
     (function () {
       const S = window.SOPHIA;

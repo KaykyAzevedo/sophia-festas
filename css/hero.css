@@ -1,0 +1,153 @@
+/* =========================================================
+   Hero cinematográfico — foto em slideshow (Ken Burns) + logo animada, selo, faixa de destaques, nav translúcida
+   Só transform/opacity nas animações. prefers-reduced-motion: ver fim do arquivo.
+   ========================================================= */
+:root { --e: cubic-bezier(.16, .84, .24, 1); }
+.spark { display: none !important; }              /* troca o brilho padrão pelo rastro de estrelas */
+html, body { overflow-x: clip; }
+
+/* ---------- navegação melhorada: translúcida, some ao descer, progresso e link ativo ---------- */
+.nav { transition: transform .5s var(--e), background .4s, padding .4s, box-shadow .4s; }
+.nav::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .4s; background: linear-gradient(180deg, rgba(3,4,9,.8), rgba(3,4,9,0)); }
+.nav:not(.scrolled)::before { opacity: 1; }
+.nav.scrolled { background: rgba(7, 11, 23, .55); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); }
+.nav.nav-hide { transform: translateY(-110%); }
+.nav-progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: linear-gradient(90deg, var(--blue), var(--blue-ice)); box-shadow: 0 0 10px var(--blue-glow); }
+.nav-links a.is-active { color: #fff; }
+.nav-links a.is-active::after { transform: scaleX(1); }
+.nav-links .nav-wa { background: linear-gradient(135deg, #1648ad, #2f7bff); color: #fff; box-shadow: 0 0 0 1px rgba(185,214,255,.4) inset; }
+.nav-links .nav-wa::after { display: none; }
+
+/* ---------- base dos heróis de prévia ---------- */
+.hx { position: relative; isolation: isolate; overflow: hidden; }
+.hx::before { content: none !important; }
+.hx [data-logo="big"] { width: min(680px, calc(100vw - 1.5rem)); aspect-ratio: 592 / 298; margin: 0 auto; }
+.hx .hero-inner { z-index: 5; }
+.depth-slot { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+
+/* revelações escalonadas (entram quando <html> recebe .go) */
+.mo [data-rv] { opacity: 0; transform: translate3d(0, 26px, 0); }
+.mo.go [data-rv] { opacity: 1; transform: none; transition: opacity 1s var(--e), transform 1s var(--e); transition-delay: calc(var(--d, 0ms) + var(--i, 0) * 110ms); }
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
+.wi { display: inline-block; }
+.mo .wi { transform: translate3d(0, 112%, 0); }
+.mo.go .wi { transform: none; transition: transform 1s var(--e); transition-delay: calc(var(--d, 0ms) + var(--k) * 55ms); }
+
+/* botões: brilho no hover + magnético */
+.btn { overflow: hidden; }
+.btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 60%; transform: translateX(-130%) skewX(-18deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); pointer-events: none; }
+.btn:hover::after { transform: translateX(260%) skewX(-18deg); transition: transform .9s var(--e); }
+.btn[data-magnetic] { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0); }
+.btn[data-magnetic]:hover { transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) - 2px), 0); }
+.btn-wa-big { padding: 1.15rem 2.2rem; font-size: .86rem; background: linear-gradient(135deg, #1648ad, #2f7bff 50%, #1648ad); color: #fff; box-shadow: 0 0 0 1px rgba(185,214,255,.5) inset, 0 14px 44px -10px var(--blue-glow); }
+.btn-wa-big svg { width: 22px; height: 22px; flex: none; }
+.pulse::before { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid rgba(106,168,255,.7); animation: ring 2.6s var(--e) infinite; pointer-events: none; }
+@keyframes ring { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.35, 1.7); opacity: 0; } }
+
+/* rastro de estrelas */
+.trail { position: fixed; z-index: 70; pointer-events: none; opacity: 0; color: #dbe9ff; text-shadow: 0 0 8px var(--blue); margin: -6px 0 0 -6px; }
+.trail.on { animation: trail .95s ease-out forwards; }
+@keyframes trail { 0% { opacity: .95; transform: translate(0,0) scale(1) rotate(0); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.2) rotate(var(--r)); } }
+
+/* indicador de scroll animado */
+.scroll-ind { position: absolute; left: 50%; bottom: 1.4rem; z-index: 6; width: 26px; height: 42px; margin-left: -13px; border: 1px solid rgba(201,209,220,.5); border-radius: 14px; }
+.scroll-ind::after { content: ""; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--blue-ice); box-shadow: 0 0 8px var(--blue); animation: wheel 2s var(--e) infinite; }
+@keyframes wheel { 0% { transform: translateY(0); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(16px); opacity: 0; } }
+@media (max-height: 760px), (max-width: 760px) { .scroll-ind { display: none; } }
+
+/* selo giratório (a partir de R$ 950 / cashback 40%) */
+.seal { position: relative; width: 148px; aspect-ratio: 1; display: grid; place-items: center; flex: none; }
+.seal-bg { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(12,20,44,.82) 52%, rgba(7,11,23,.6)); box-shadow: 0 0 0 1px rgba(185,214,255,.35) inset, 0 0 40px -6px var(--blue-glow); backdrop-filter: blur(6px); }
+.seal-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 26s linear infinite; }
+.seal-ring text { font-family: var(--font-display); font-size: 9.6px; letter-spacing: .26em; fill: var(--blue-ice); }
+.seal-in { position: relative; text-align: center; line-height: 1.05; }
+.seal-in small { display: block; font-family: var(--font-display); font-size: .5rem; letter-spacing: .22em; text-transform: uppercase; color: var(--silver); }
+.seal-in b { display: block; font-family: var(--font-serif); font-weight: 500; font-size: 1.9rem; margin: .1rem 0; }
+.seal.cb .seal-in b { font-size: 2.3rem; }
+.seal-in b i { font-style: normal; font-size: .62em; margin-right: .12em; }
+
+/* ---------- profundidade: estrelas e borboletas ---------- */
+.depth-host { position: absolute; inset: 0; }
+.depth { position: absolute; inset: -3%; }
+.ds { position: absolute; font-size: var(--s); line-height: 1; color: #cfe3ff; text-shadow: 0 0 6px rgba(106,168,255,.9); opacity: var(--o, .6); animation: tw var(--t) ease-in-out var(--dl) infinite; }
+@keyframes tw { 0%, 100% { opacity: .08; transform: scale(.7); } 50% { opacity: var(--o); transform: scale(1.05); } }
+.df { position: absolute; width: var(--s); opacity: 0; animation: var(--path, p1) var(--T) ease-in-out var(--dl) infinite; will-change: transform, opacity; }
+.df img { width: 100%; height: auto; display: block; transform-origin: 70% 60%; animation: flap var(--fl) ease-in-out infinite alternate; filter: drop-shadow(0 0 5px rgba(47,123,255,.55)); }
+.p1 { --path: p1; } .p2 { --path: p2; } .p3 { --path: p3; }
+@keyframes flap { from { transform: scaleX(1); } to { transform: scaleX(.78); } }
+/* trajetórias suaves; a parte parada é o pouso (o corpo descansa, só as asas respiram) */
+@keyframes p1 { 0% { opacity: 0; transform: translate3d(-8vw, 8vh, 0) rotate(14deg); } 8% { opacity: var(--o); } 24% { transform: translate3d(7vw, -5vh, 0) rotate(-12deg); } 40% { transform: translate3d(15vw, -3vh, 0) rotate(4deg); } 46%, 60% { transform: translate3d(16vw, -2vh, 0) rotate(0deg); } 78% { transform: translate3d(28vw, -15vh, 0) rotate(-14deg); } 92% { opacity: var(--o); } 100% { opacity: 0; transform: translate3d(40vw, -26vh, 0) rotate(10deg); } }
+@keyframes p2 { 0% { opacity: 0; transform: translate3d(10vw, -6vh, 0) rotate(-16deg); } 8% { opacity: var(--o); } 26% { transform: translate3d(-6vw, 4vh, 0) rotate(10deg); } 44%, 56% { transform: translate3d(-14vw, 2vh, 0) rotate(-3deg); } 76% { transform: translate3d(-24vw, 14vh, 0) rotate(12deg); } 92% { opacity: var(--o); } 100% { opacity: 0; transform: translate3d(-36vw, 8vh, 0) rotate(-8deg); } }
+@keyframes p3 { 0% { opacity: 0; transform: translate3d(0, 14vh, 0) rotate(0deg); } 8% { opacity: var(--o); } 30% { transform: translate3d(9vw, 4vh, 0) rotate(14deg); } 50% { transform: translate3d(2vw, -8vh, 0) rotate(-12deg); } 54%, 66% { transform: translate3d(4vw, -9vh, 0) rotate(2deg); } 85% { transform: translate3d(-8vw, -20vh, 0) rotate(-10deg); } 94% { opacity: var(--o); } 100% { opacity: 0; transform: translate3d(-12vw, -30vh, 0) rotate(8deg); } }
+/* fora da tela / aba oculta: pausa tudo */
+
+
+/* fora da tela / aba oculta: pausa tudo */
+.hx-off .depth *, .hx-off .seal-ring, .hx-off .scroll-ind::after, .hx-off .slide img,
+.hx-hidden .depth *, .hx-hidden .seal-ring, .hx-hidden .slide img { animation-play-state: paused !important; }
+/* balão de WhatsApp: oculto enquanto o hero está no topo */
+.wa-float { transition: opacity .45s var(--e), transform .45s var(--e); }
+.hero-top .wa-float { opacity: 0; transform: translateY(14px) scale(.9); pointer-events: none; visibility: hidden; transition: opacity .45s var(--e), transform .45s var(--e), visibility 0s .45s; }
+
+/* a faixa/hero assumem as borboletas: some o voo global enquanto o hero está na tela */
+#flutter { transition: opacity .6s; }
+.hero-vis #flutter { opacity: 0; }
+
+/* =========================================================
+   Hero: slideshow de fundo (Ken Burns) + camada de luz/vinheta
+   ========================================================= */
+.hx { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem; padding: 6.5rem 1rem 12rem; text-align: center; background: var(--black); }
+.hx-slides { position: absolute; inset: -7% 0; z-index: 0; }
+.hx .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 2s ease; overflow: hidden; }
+.hx .slide.on { opacity: 1; }
+.hx .slide picture { display: block; width: 100%; height: 100%; }
+.hx .slide img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; transform-origin: var(--ox, 50%) var(--oy, 50%); will-change: transform; }
+.hx .slide.on img, .hx .slide.leave img { animation: kb 12s ease-out forwards; }
+@keyframes kb { from { transform: scale(1.04); } to { transform: scale(1.18); } }
+.hx-glow { position: absolute; z-index: 1; left: 50%; top: 42%; width: min(980px, 140vw); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(circle, rgba(47,123,255,.3), rgba(47,123,255,.07) 45%, transparent 66%); animation: breathe 7s ease-in-out infinite; }
+/* escurecimento: base uniforme (garante contraste em qualquer foto) + vinheta + degradês topo/rodapé */
+.hx-vig { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 46%, rgba(3,4,9,.42), rgba(3,4,9,0) 100%),
+    radial-gradient(ellipse at 50% 45%, rgba(3,4,9,.34) 0, rgba(3,4,9,.6) 52%, rgba(3,4,9,.95) 100%),
+    linear-gradient(180deg, rgba(3,4,9,.7), transparent 22%, transparent 55%, rgba(3,4,9,.96)); }
+.hx .hero-inner { z-index: 5; }
+.hx .eyebrow { color: #8fbaff; text-shadow: 0 1px 10px rgba(3,4,9,.9); }
+.hx-tag { font-family: var(--font-serif); font-style: italic; font-size: clamp(1.15rem, 2.4vw, 1.6rem); color: #dbe9ff; text-shadow: 0 1px 14px rgba(3,4,9,.95), 0 0 2px rgba(3,4,9,.8); max-width: 640px; margin: .6rem auto 1.8rem; }
+.hx-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.hx-seal { z-index: 6; }
+@media (min-width: 1100px) { .hx-seal { position: absolute; right: 7vw; top: 34%; } }
+.hx-ticks { position: absolute; z-index: 6; left: 50%; bottom: 5.1rem; translate: -50% 0; display: flex; gap: .5rem; }
+.hx-ticks i { display: block; width: 34px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.22); overflow: hidden; position: relative; }
+.hx-ticks i::after { content: ""; position: absolute; inset: 0; background: var(--blue-ice); transform: scaleX(0); transform-origin: 0 50%; }
+.hx-ticks i.on::after { animation: tick var(--iv, 6.5s) linear forwards; }
+@keyframes tick { to { transform: scaleX(1); } }
+.hx-strip { position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(7,11,23,.55), rgba(3,4,9,.92)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.hx-strip li { display: flex; align-items: center; justify-content: center; gap: .9rem; padding: 1.25rem .8rem; border-left: 1px solid var(--line); text-align: left; font-family: var(--font-display); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--silver); }
+.hx-strip li:first-child { border-left: 0; }
+@media (min-width: 961px) { .hx-strip li:last-child { padding-right: 9.4rem; } } /* não fica atrás do balão de WhatsApp */
+.hx-strip svg { width: 30px; height: 30px; flex: none; color: var(--blue-soft); fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.hx-strip b { display: block; color: #fff; font-weight: 500; font-size: .8rem; }
+.hx-strip em { display: block; font-style: normal; color: var(--muted); font-size: .62rem; letter-spacing: .1em; }
+.hx .scroll-ind { bottom: 6.8rem; left: auto; right: 2.2rem; margin: 0; }
+@media (max-width: 1099px) { .hx .scroll-ind { display: none; } }
+/* celular: seal, ticks e faixa entram no fluxo (nada cortado); faixa em grade 2x2 */
+@media (max-width: 960px) {
+  .hx { padding: 6rem .75rem 0; gap: 1.2rem; }
+  .hx-ticks { position: static; translate: none; margin-top: .2rem; }
+  .hx-strip { position: relative; width: calc(100% + 1.5rem); margin: .8rem -.75rem 0; grid-template-columns: repeat(2, 1fr); }
+  .hx-strip li { padding: .85rem .6rem; gap: .6rem; font-size: .62rem; border-top: 1px solid var(--line); justify-content: flex-start; }
+  .hx-strip li:nth-child(odd) { border-left: 0; padding-left: 1rem; }
+  .hx-strip li:nth-child(-n+2) { border-top: 0; }
+  .hx-strip svg { width: 24px; height: 24px; }
+  .seal { width: 124px; }
+  .seal-in b { font-size: 1.6rem; }
+}
+/* ---------- sem animação: conteúdo final, sem parallax, só um frame ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .depth, .hx-slides, .seal-ring { transform: none !important; }
+  .df { opacity: var(--o); }
+  .df img { transform: none; }
+  .trail, .pulse::before, .scroll-ind::after { display: none; }
+  .nav.nav-hide { transform: none; }
+}

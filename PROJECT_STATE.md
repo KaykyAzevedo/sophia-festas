@@ -18,6 +18,7 @@ HTML + CSS + JavaScript puro. Fontes Google (Great Vibes, Cinzel, Cormorant Gara
 - `css/style.css` — identidade visual compartilhada; `css/agenda.css` — painel
 - `js/brand.js` — logo OFICIAL redesenhada em SVG (referência do cliente fora do repositório, em D:/SITE VENDER/referencias/logo-original.jpeg): Sophia em Great Vibes, borboleta monarca azul de perfil, estrela de 8 pontas com 4 estrelinhas e FESTAS em Cinzel. Branca, para fundo escuro; classes `.sf-word/.sf-sub/.sf-star` permitem versão escura (usada na impressão do contrato). Mesma borboleta nas borboletinhas do magic.js.
 - `js/magic.js` — estrelas, borboletas, brilho do cursor, nav (aria/Esc), reveal, toast
+- `css/hero.css` + `js/hero.js` — hero cinematográfico: slideshow Ken Burns de 5 fotos reais, logo com reveal, selo "a partir de R$ 950", faixa de destaques, parallax, 9 borboletas em camadas (4 no celular), nav translúcida; balão do WhatsApp só aparece após rolar o hero
 - `js/agenda.js` — lógica da agenda
 
 ## Preços (em config.js)
