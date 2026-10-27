@@ -56,15 +56,15 @@ html, body { overflow-x: clip; }
 @media (max-height: 760px), (max-width: 760px) { .scroll-ind { display: none; } }
 
 /* selo giratório (a partir de R$ 950 / cashback 40%) */
-.seal { position: relative; width: 148px; aspect-ratio: 1; display: grid; place-items: center; flex: none; }
-.seal-bg { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(12,20,44,.82) 52%, rgba(7,11,23,.6)); box-shadow: 0 0 0 1px rgba(185,214,255,.35) inset, 0 0 40px -6px var(--blue-glow); backdrop-filter: blur(6px); }
-.seal-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 26s linear infinite; }
-.seal-ring text { font-family: var(--font-display); font-size: 9.6px; letter-spacing: .26em; fill: var(--blue-ice); }
-.seal-in { position: relative; text-align: center; line-height: 1.05; }
-.seal-in small { display: block; font-family: var(--font-display); font-size: .5rem; letter-spacing: .22em; text-transform: uppercase; color: var(--silver); }
-.seal-in b { display: block; font-family: var(--font-serif); font-weight: 500; font-size: 1.9rem; margin: .1rem 0; }
-.seal.cb .seal-in b { font-size: 2.3rem; }
-.seal-in b i { font-style: normal; font-size: .62em; margin-right: .12em; }
+.seal { position: relative; width: 148px; aspect-ratio: 1; flex: none; }
+.seal-bg { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(12,20,44,.86) 52%, rgba(7,11,23,.66)); box-shadow: 0 0 0 1px rgba(185,214,255,.35) inset, 0 0 40px -6px var(--blue-glow); backdrop-filter: blur(6px); }
+/* só o anel gira; o centro fica parado, centralizado por flex (sem offsets) */
+.seal-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 40s linear infinite; }
+.seal-ring text { font-family: var(--font-display); font-size: 8.4px; font-weight: 500; letter-spacing: 0; fill: var(--blue-ice); }
+.seal-in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .34rem; text-align: center; line-height: 1; }
+.seal-in small { display: block; font-family: var(--font-display); font-size: .5rem; letter-spacing: .2em; padding-left: .2em; /* compensa o espaço final do letter-spacing */ text-transform: uppercase; color: var(--silver); white-space: nowrap; }
+.seal-in b { display: inline-flex; align-items: baseline; justify-content: center; gap: .22em; font-family: var(--font-serif); font-weight: 500; font-size: 2rem; line-height: 1; white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
+.seal-in b i { font-style: normal; font-size: .58em; color: var(--blue-ice); }
 
 /* ---------- profundidade: estrelas e borboletas ---------- */
 .depth-host { position: absolute; inset: 0; }
@@ -141,7 +141,8 @@ html, body { overflow-x: clip; }
   .hx-strip li:nth-child(-n+2) { border-top: 0; }
   .hx-strip svg { width: 24px; height: 24px; }
   .seal { width: 124px; }
-  .seal-in b { font-size: 1.6rem; }
+  .seal-in b { font-size: 1.7rem; }
+  .seal-in small { font-size: .44rem; }
 }
 /* ---------- sem animação: conteúdo final, sem parallax, só um frame ---------- */
 @media (prefers-reduced-motion: reduce) {
