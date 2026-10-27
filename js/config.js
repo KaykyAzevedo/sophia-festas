@@ -1,5 +1,5 @@
 /* =========================================================
-   Sophia Festa — configuração central (locação da casa por diária)
+   Sophia Festas — configuração central (locação da casa por diária)
    Compartilhado entre a landing e a agenda. Sem back end.
    ========================================================= */
 (function () {
@@ -18,14 +18,14 @@
   }
 
   const S = {
-    // PLACEHOLDER: número de teste. Trocar pelo WhatsApp real (DDI+DDD+número, só dígitos).
-    WHATSAPP: "5500000000000",
+    WHATSAPP: "5521998172874", // +55 21 99817-2874 (DDI+DDD+número, só dígitos)
+    ADDRESS: "Estrada do Mendanha, 6271",
 
-    RATES: { weekday: 750, friday: 1000, weekend: 1500 },
+    BASE_PRICE: 950,        // diária "a partir de" (valor único; sem faixas por dia da semana)
     HOURS_INCLUDED: 8,
     EXTRA_HOUR_PCT: 0.10,   // hora adicional = 10% da diária
     CLEANING_FEE: 150,      // cobrada à parte
-    CASHBACK_PCT: 0.10,     // desconto no próximo evento
+    CASHBACK_PCT: 0.40,     // desconto no próximo evento
 
     // Feriados nacionais e datas comemorativas (2026 e 2027) — tratadas como "weekend".
     // ATENÇÃO: a lista só cobre até 2027-12-31; precisa ser estendida (e HOLIDAYS_MAX atualizado) para datas posteriores.
@@ -105,18 +105,18 @@
       return S.HOLIDAYS.indexOf(dateStr) !== -1;
     },
 
-    // seg–qui = weekday; sexta ou véspera de feriado = friday;
-    // sáb, dom, feriado ou data comemorativa = weekend (prioridade)
+    // diária única (BASE_PRICE). O "tier" é só classificação do dia (usado pela agenda), não muda o valor:
+    // seg–qui = weekday; sexta ou véspera de feriado = friday; sáb, dom, feriado ou data comemorativa = weekend
     dayRate(dateStr) {
       const d = parse(dateStr);
-      if (!d) return { rate: S.RATES.weekday, tier: "weekday" }; // data inválida: sem exceção
+      if (!d) return { rate: S.BASE_PRICE, tier: "weekday" }; // data inválida: sem exceção
       const dow = d.getDay();
       let tier = "weekday";
       if (dow === 5) tier = "friday";
       const next = new Date(d); next.setDate(next.getDate() + 1);
       if (S.isHoliday(fmt(next))) tier = "friday";
       if (dow === 0 || dow === 6 || S.isHoliday(fmt(d))) tier = "weekend";
-      return { rate: S.RATES[tier], tier };
+      return { rate: S.BASE_PRICE, tier };
     },
 
     // base do cashback: diária + horas adicionais (sem taxa de limpeza e sem opcionais)

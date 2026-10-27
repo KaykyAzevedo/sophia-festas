@@ -1,16 +1,16 @@
 /* =========================================================
-   Marca Sophia Festa — logo oficial redesenhada em SVG
+   Marca Sophia Festas — logo oficial redesenhada em SVG
    (referência: logo original do cliente, fora do repositório)
    Uso: <div data-logo="big|mark"></div>  /  <div data-butterfly></div>
    API: window.SophiaBrand = { butterflySVG, logoSVG, name }
-   Fontes: Great Vibes (Sophia) e Cinzel (FESTA), já carregadas nas páginas.
+   Fontes: Great Vibes (Sophia) e Cinzel (FESTAS), já carregadas nas páginas.
    Classes úteis p/ tema claro/impressão: .sf-word, .sf-sub, .sf-star.
    Camadas .sf-layer[data-layer] (word, sub, star, bfly): parallax 3D do hero (magic.js).
    Borboleta solta (de frente): asas .bf-fore/.bf-hind (.l/.r) articuladas junto ao corpo.
    Borboleta da logo (de perfil): asas .pw-fore/.pw-hind. Animações em css/style.css.
    ========================================================= */
 (function () {
-  const BRAND_NAME = "Sophia Festa";
+  const BRAND_NAME = "Sophia Festas";
   const NS = "http://www.w3.org/2000/svg";
   let uid = 0;
 
@@ -30,7 +30,7 @@
       while (pos < len * to) {
         const q = path.getPointAtLength(pos);
         const x = hx + (q.x - hx) * sc, y = hy + (q.y - hy) * sc;
-        const r = 0.5 + rnd() * 0.65;
+        const r = 0.85 + rnd() * 0.95;
         out += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}"/>`;
         pos += step * (0.8 + rnd() * 0.5);
       }
@@ -112,10 +112,10 @@
   function profileDefs(p) {
     return `
       <radialGradient id="${p}-wing" gradientUnits="userSpaceOnUse" cx="78" cy="92" r="78">
-        <stop offset="0" stop-color="#8af2ff"/>
-        <stop offset=".28" stop-color="#26bcff"/>
-        <stop offset=".62" stop-color="#1068ee"/>
-        <stop offset="1" stop-color="#0a3ab0"/>
+        <stop offset="0" stop-color="#5fd0ff"/>
+        <stop offset=".3" stop-color="#1a9bff"/>
+        <stop offset=".65" stop-color="#0b6cf0"/>
+        <stop offset="1" stop-color="#0845c8"/>
       </radialGradient>
       <linearGradient id="${p}-pbody" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#1b2a55"/><stop offset="1" stop-color="#02040c"/>
@@ -125,22 +125,22 @@
   function profileShapes(p) {
     return `
       <g class="pw-hind">
-        <path d="${PHIND}" fill="#05070f" stroke="#2a5fd0" stroke-width=".7"/>
+        <path d="${PHIND}" fill="#02050c" stroke="#02050c" stroke-width="1"/>
         <path d="${PHIND}" ${shrink(54, 120, 0.8)} fill="url(#${p}-wing)"/>
-        <g stroke="#031238" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round">
+        <g stroke="#02060f" stroke-width="2.3" fill="none" opacity=".95" stroke-linecap="round">
           <path d="M100,112 Q60,100 26,104"/><path d="M100,113 Q52,114 16,120"/><path d="M100,114 Q60,128 24,140"/>
           <path d="M100,115 Q76,136 50,150"/><path d="M100,113 Q78,114 62,108"/>
         </g>
-        ${dots("p-hind", PHIND, 54, 120, 0.92, 31, 0.07, 0.9, 6)}
+        ${dots("p-hind", PHIND, 54, 120, 0.9, 31, 0.07, 0.92, 8)}${dots("p-hind2", PHIND, 54, 120, 0.82, 57, 0.1, 0.5, 14)}
       </g>
       <g class="pw-fore">
-        <path d="${PFORE}" fill="#05070f" stroke="#2a5fd0" stroke-width=".7"/>
+        <path d="${PFORE}" fill="#02050c" stroke="#02050c" stroke-width="1"/>
         <path d="${PFORE}" ${shrink(72, 56, 0.8)} fill="url(#${p}-wing)"/>
-        <g stroke="#031238" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round">
+        <g stroke="#02060f" stroke-width="2.3" fill="none" opacity=".95" stroke-linecap="round">
           <path d="M98,100 Q70,70 56,16"/><path d="M98,100 Q56,70 44,32"/><path d="M98,101 Q50,80 44,52"/>
           <path d="M98,102 Q70,86 58,74"/><path d="M98,99 Q92,60 80,32"/>
         </g>
-        ${dots("p-fore", PFORE, 72, 56, 0.92, 43, 0.06, 0.9, 6)}
+        ${dots("p-fore", PFORE, 72, 56, 0.9, 43, 0.06, 0.92, 8)}${dots("p-fore2", PFORE, 72, 56, 0.82, 61, 0.1, 0.55, 13)}
       </g>
       <path d="M114,104 C116,82 123,64 120,50 M116,105 C124,92 134,78 140,64" stroke="#05070f" stroke-width="1.2" fill="none" stroke-linecap="round"/>
       <circle cx="120" cy="50" r="1.5" fill="#05070f"/><circle cx="140" cy="64" r="1.5" fill="#05070f"/>
@@ -155,11 +155,11 @@
   /* ================= estrelas ================= */
   const pt = (cx, cy, r, a) => (cx + r * Math.cos(a)).toFixed(1) + "," + (cy + r * Math.sin(a)).toFixed(1);
 
-  // estrela facetada de 8 pontas: cada ponta tem metade clara e metade azul
-  function star8Facets(cx, cy, L, S, I, light, dark) {
+  // estrela facetada de 8 pontas (prata): comprimentos por ponta, a partir do norte, no sentido horário
+  function star8Facets(cx, cy, lens, I, light, dark) {
     let out = "";
     for (let k = 0; k < 8; k++) {
-      const a = (Math.PI / 4) * k - Math.PI / 2, r = k % 2 ? S : L, d = Math.PI / 8;
+      const a = (Math.PI / 4) * k - Math.PI / 2, r = lens[k], d = Math.PI / 8;
       out += `<polygon points="${cx},${cy} ${pt(cx, cy, I, a - d)} ${pt(cx, cy, r, a)}" fill="${light}"/>` +
              `<polygon points="${cx},${cy} ${pt(cx, cy, r, a)} ${pt(cx, cy, I, a + d)}" fill="${dark}"/>`;
     }
@@ -170,7 +170,7 @@
     return `${cx},${cy - r} ${cx + k},${cy - k} ${cx + r},${cy} ${cx + k},${cy + k} ${cx},${cy + r} ${cx - k},${cy + k} ${cx - r},${cy} ${cx - k},${cy - k}`;
   }
 
-  // Logo: "Sophia" cursiva branca, borboleta azul no S, estrela à direita e FESTA embaixo
+  // Logo: "Sophia" cursiva branca, borboleta monarca azul no S, estrela prata à direita e FESTAS embaixo
   function logoSVG(variant) {
     const p = "lg" + ++uid;
     const big = variant === "big";
@@ -180,28 +180,28 @@
         ${profileDefs(p)}
         <radialGradient id="${p}-star" cx=".5" cy=".5" r=".55">
           <stop offset="0" stop-color="#ffffff"/>
-          <stop offset=".3" stop-color="#d8e9ff"/>
-          <stop offset="1" stop-color="#5a9dff"/>
+          <stop offset=".4" stop-color="#eef2f8"/>
+          <stop offset="1" stop-color="#b4bfcf"/>
         </radialGradient>
         <filter id="${p}-glow" x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="4" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="${p}-relief" x="-5%" y="-5%" width="110%" height="120%">
-          <feDropShadow dx="1.2" dy="1.8" stdDeviation="1.2" flood-color="#2f7bff" flood-opacity=".55"/>
+          <feDropShadow dx="1.2" dy="1.8" stdDeviation="1.2" flood-color="#8aa0c8" flood-opacity=".5"/>
         </filter>
       </defs>
       <g transform="translate(16 12)">
         <g class="sf-layer" data-layer="word"><text class="sf-word" transform="translate(26 236) scale(1 1.18)" font-family="'Great Vibes', cursive" font-size="172" fill="#fff"
-              stroke="#b9d6ff" stroke-width=".8" paint-order="stroke" filter="url(#${p}-relief)">Sophia</text></g>
+              stroke="#e4e9f1" stroke-width="1.6" paint-order="stroke" filter="url(#${p}-relief)">Sophia</text></g>
         <g class="sf-layer" data-layer="bfly"><g class="logo-butterfly" transform="translate(-4 -2)">${profileShapes(p)}</g></g>
         <g class="sf-layer" data-layer="star"><g class="sf-star" filter="url(#${p}-glow)">
-          ${star8Facets(478, 136, 74, 44, 15, "#f2f8ff", "#4f95ff")}
+          ${star8Facets(478, 140, [84, 40, 76, 40, 100, 40, 76, 40], 13, "#ffffff", "#aeb8c8")}
           ${big ? [[438, 78, 12], [520, 82, 11], [528, 188, 11], [500, 216, 9]].map(([x, y, r]) =>
-            `<polygon points="${star4(x, y, r)}" fill="url(#${p}-star)" stroke="#7fb2ff" stroke-width=".7"/>`).join("") : ""}
+            `<polygon points="${star4(x, y, r)}" fill="url(#${p}-star)" stroke="#dfe6f0" stroke-width=".7"/>`).join("") : ""}
         </g></g>
-        ${big ? `<g class="sf-layer" data-layer="sub"><text class="sf-sub" x="266" y="294" font-family="Cinzel, serif" font-weight="700" font-size="52" textLength="246" lengthAdjust="spacing" fill="#fff"
-              stroke="#fff" stroke-width=".9" paint-order="stroke">FESTA</text></g>` : ""}
+        ${big ? `<g class="sf-layer" data-layer="sub"><text class="sf-sub" x="272" y="298" font-family="Cinzel, serif" font-weight="700" font-size="50" textLength="262" lengthAdjust="spacing" fill="#f3f6fa"
+              stroke="#f3f6fa" stroke-width=".9" paint-order="stroke">FESTAS</text></g>` : ""}
       </g>
     </svg>`;
   }

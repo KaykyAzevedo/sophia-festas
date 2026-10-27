@@ -10,19 +10,16 @@
   const li = (arr) => "<ul>" + arr.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>";
 
   /* ---------- termo ---------- */
-  const R = S.RATES;
   $("term").innerHTML =
     "<h3>1. Partes</h3>" +
-    "<p><strong>Locadora:</strong> Sophia Festa — razão social, CNPJ/CPF e endereço: " + TBD("dados da locadora") + ".<br>" +
+    "<p><strong>Locadora:</strong> Sophia Festas — razão social, CNPJ/CPF e endereço: " + TBD("dados da locadora") + ".<br>" +
     "<strong>Locatário(a):</strong> a pessoa que assina este termo na seção abaixo, identificada por nome completo, CPF e telefone.</p>" +
     "<h3>2. Objeto</h3>" +
-    "<p>Locação, por diária, de uma casa de lazer localizada em " + TBD("endereço do imóvel") + ", exclusivamente como espaço. " +
+    "<p>Locação, por diária, de uma casa de lazer localizada em " + esc(S.ADDRESS) + ", exclusivamente como espaço. " +
     "A locação é somente do espaço e dos itens inclusos listados abaixo.</p>" +
     "<h3>3. Itens inclusos</h3><p>Fazem parte da diária:</p>" + li(S.INCLUDED) +
     "<h3>4. Valores</h3>" + li([
-      "Segunda a quinta: " + brl(R.weekday) + ".",
-      "Sexta-feira e véspera de feriado: " + brl(R.friday) + ".",
-      "Sábados, domingos, feriados e datas comemorativas (como Dia dos Namorados, São João e Halloween): " + brl(R.weekend) + ".",
+      "Diária a partir de " + brl(S.BASE_PRICE) + ".",
       "Cada diária inclui " + S.HOURS_INCLUDED + " horas de festa.",
       "Hora adicional: " + pct(S.EXTRA_HOUR_PCT) + " do valor da diária, mediante disponibilidade.",
       "Taxa de limpeza: " + brl(S.CLEANING_FEE) + ", cobrada à parte.",
@@ -121,7 +118,7 @@
     ].map((r) => "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>").join("");
     $("receipt-code").textContent = "Código de referência: " + cod;
     const msg = [
-      "*Aceite do termo de locação — Sophia Festa*",
+      "*Aceite do termo de locação — Sophia Festas*",
       "Nome: " + name, "CPF: " + cpf, "Telefone: " + phone,
       "Data do evento: " + fmtDate(date), "Tipo de evento: " + type,
       "Diária: " + plain(brl(rate)), "Assinado em: " + stamp,

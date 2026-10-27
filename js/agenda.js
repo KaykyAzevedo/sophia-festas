@@ -10,11 +10,10 @@
   const SESSION = "sophia.session";
   const MONTHS = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
   const DOW = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"];
-  const TIER_LABEL = { weekday: "Seg–qui", friday: "Sexta / véspera", weekend: "Fim de semana / feriado" };
 
   const S = window.SOPHIA;
   if (!S) console.error("js/config.js não carregou: window.SOPHIA indefinido.");
-  const CASHBACK_PCT = (S && S.CASHBACK_PCT) || 0.1;
+  const CASHBACK_PCT = (S && S.CASHBACK_PCT) || 0;
   const OPTIONALS = (S && S.OPTIONALS) || [];
   const EVENT_TYPES = ((S && S.EVENT_TYPES) || ["Outro"]).map((t) => (typeof t === "string" ? t : t.label || t.id));
 
@@ -34,8 +33,8 @@
 
   /* ---------- preço (SOPHIA.quote) ---------- */
   function dayInfo(date) {
-    try { if (S && date) { const r = S.dayRate(date); if (!r) throw 0; return { rate: r.rate, tier: r.tier, holiday: !!S.isHoliday(date) }; } } catch (e) {}
-    return { rate: 0, tier: "weekday", holiday: false };
+    try { if (S && date) { const r = S.dayRate(date); if (!r) throw 0; return { rate: r.rate, holiday: !!S.isHoliday(date) }; } } catch (e) {}
+    return { rate: 0, holiday: false };
   }
   // detalhamento automático de uma reserva (sem desconto de cashback)
   function breakdown(date, extraHours, optIds, optManual) {
@@ -200,15 +199,15 @@
       const busy = active > 0, dup = active > 1;
       const cell = document.createElement("button");
       cell.type = "button";
-      cell.className = "day t-" + info.tier +
+      cell.className = "day" +
         (info.holiday ? " holiday" : "") +
         (busy ? " busy" : "") + (dup ? " dup" : "") +
         (d.getMonth() !== view.getMonth() ? " other" : "") +
         (key === todayIso ? " today" : "") +
         (key === selectedDay ? " selected" : "");
-      cell.title = `${dup ? "⚠ Conflito: mais de uma reserva neste dia · " : ""}${TIER_LABEL[info.tier] || ""}${info.holiday ? " · feriado" : ""} · ${brl(info.rate)}`;
+      cell.title = `${dup ? "⚠ Conflito: mais de uma reserva neste dia · " : ""}${info.holiday ? "Feriado / data comemorativa" : ""}`.replace(/ · $/, "");
       cell.innerHTML = `<span class="top"><span class="num">${d.getDate()}</span>` +
-        `<span class="rate">${info.holiday ? "★ " : ""}${info.rate ? Number(info.rate).toLocaleString("pt-BR") : ""}</span></span>` +
+        `<span class="rate">${info.holiday ? "★" : ""}</span></span>` +
         evs.slice(0, 2).map((b) => `<span class="chip ${statusClass(b.status)}" title="${esc(b.client)}">${esc(b.client.split(" ")[0])}</span>`).join("") +
         (evs.length > 2 ? `<span class="more">+${evs.length - 2} mais</span>` : "");
       // o clique simples re-renderiza o calendário e descartaria o dblclick: usa a contagem de cliques
@@ -245,7 +244,7 @@
       items = bookings.filter((b) => b.date === selectedDay).sort((a, b) => a.start.localeCompare(b.start));
       const nAct = items.filter((b) => b.status !== "Cancelada").length;
       const taken = nAct > 0;
-      list.innerHTML = `<div class="day-info t-${info.tier}"><span class="dot ${info.holiday ? "holiday" : info.tier}"></span>${TIER_LABEL[info.tier] || ""}${info.holiday ? " · feriado" : ""} — diária ${brl(info.rate)}</div>` +
+      list.innerHTML = `<div class="day-info"><span class="dot ${info.holiday ? "holiday" : ""}"></span>${info.holiday ? "Feriado / data comemorativa · " : ""}a partir de ${brl(info.rate)}</div>` +
         (nAct > 1 ? `<div class="warn on">⚠ Conflito de data: ${nAct} reservas ativas neste dia. Cancele ou mude a data de uma delas.</div>` : "") +
         (items.length
           ? items.map(evCard).join("") + (taken ? "" : `<button class="btn btn-ghost" data-new-day style="justify-self:center;margin-top:.4rem">+ Reservar este dia</button>`)
@@ -349,7 +348,7 @@
     let h = "";
     if (!date) h = `<div class="q-row"><span>Escolha a data para calcular a diária.</span></div>`;
     else {
-      h += row(`Diária · ${TIER_LABEL[info.tier] || ""}${info.holiday ? " (feriado)" : ""}`, brl(bd.rate));
+      h += row(`Diária (a partir de)${info.holiday ? " · feriado" : ""}`, brl(bd.rate));
       h += row(`Horas adicionais${extraH ? ` (${extraH}h)` : ""}`, brl(bd.extra));
       h += row("Taxa de limpeza", brl(bd.cleaning));
       bd.opts.forEach((o) => { h += row(esc(o.label) + (o.tbd ? " (a combinar)" : ""), brl(o.price)); });

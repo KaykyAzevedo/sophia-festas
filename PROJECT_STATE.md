@@ -1,4 +1,4 @@
-# PROJECT_STATE — Sophia Festa
+# PROJECT_STATE — Sophia Festas
 
 ## Conceito
 Locação de UMA casa por diária (somente o espaço, sem serviço de festa). Não há mais salões nem pacotes.
@@ -16,25 +16,23 @@ HTML + CSS + JavaScript puro. Fontes Google (Great Vibes, Cinzel, Cormorant Gara
 - `js/config.js` — FONTE ÚNICA (`window.SOPHIA`): WhatsApp, diárias, horas incluídas, hora extra, taxa de limpeza, cashback, feriados/datas comemorativas, opcionais, tipos de evento, itens inclusos, regras e as funções `isHoliday`, `dayRate`, `quote`, `cashbackBase`. Landing e agenda dependem dele.
 - `img/` — 9 fotos reais do cliente, em 3 arquivos cada: `<nome>-800.webp` (miniaturas e figuras), `<nome>-1448.webp` (lightbox e hero) e `<nome>.jpg` (fallback 1448px, q80 progressivo). HTML usa `<picture>` (WebP + JPEG), lazy fora do hero; o lightbox abre o WebP de 1448. Originais sem recompressão em D:/SITE VENDER/referencias/fotos-originais/ (fora do repo). Caminhos relativos, sem barra inicial (site em subpasta no GitHub Pages). Total que uma visita carrega: hero ~227 KB; página inteira ~0,95 MB no desktop (era ~2,75 MB). Fotos: fachada (galeria), fachada com carros, recuo, piscina com telão (hero), área externa, salão com mesas, churrasqueira/cozinha, salão para decoração e área de jogos.
 - `css/style.css` — identidade visual compartilhada; `css/agenda.css` — painel
-- `js/brand.js` — logo OFICIAL redesenhada em SVG (referência do cliente fora do repositório, em D:/SITE VENDER/referencias/logo-original.jpeg): Sophia em Great Vibes, borboleta monarca azul de perfil, estrela de 8 pontas com 4 estrelinhas e FESTA em Cinzel. Branca, para fundo escuro; classes `.sf-word/.sf-sub/.sf-star` permitem versão escura (usada na impressão do contrato). Mesma borboleta nas borboletinhas do magic.js.
+- `js/brand.js` — logo OFICIAL redesenhada em SVG (referência do cliente fora do repositório, em D:/SITE VENDER/referencias/logo-original.jpeg): Sophia em Great Vibes, borboleta monarca azul de perfil, estrela de 8 pontas com 4 estrelinhas e FESTAS em Cinzel. Branca, para fundo escuro; classes `.sf-word/.sf-sub/.sf-star` permitem versão escura (usada na impressão do contrato). Mesma borboleta nas borboletinhas do magic.js.
 - `js/magic.js` — estrelas, borboletas, brilho do cursor, nav (aria/Esc), reveal, toast
 - `js/agenda.js` — lógica da agenda
 
 ## Preços (em config.js)
-- Segunda a quinta: R$ 750,00
-- Sexta e véspera de feriado: R$ 1.000,00
-- Sábado, domingo, feriado e data comemorativa: R$ 1.500,00 (prioridade sobre as demais)
-- Datas comemorativas de R$ 1.500 (2026 e 2027) incluem Dia dos Namorados (12/06), São João (24/06) e Halloween (31/10), além de Dia das Mães, Dia dos Pais, Dia das Crianças, Natal e Réveillon
-- 8 horas incluídas; hora adicional = 10% da diária (sujeita a disponibilidade)
+- Diária única: a partir de R$ 950,00 (sem faixas por dia da semana; total editável por reserva na agenda)
+- Datas comemorativas (2026 e 2027, marcadas com ★ na agenda) incluem Dia dos Namorados (12/06), São João (24/06) e Halloween (31/10), além de Dia das Mães, Dia dos Pais, Dia das Crianças, Natal e Réveillon
+- 8 horas incluídas; hora adicional = 10% da diária (a confirmar com a dona) (sujeita a disponibilidade)
 - Taxa de limpeza R$ 150,00 à parte
-- Cashback (decisão do cliente): 10% sobre diária + horas adicionais, SEM taxa de limpeza e sem opcionais; vira desconto no próximo evento. `SOPHIA.cashbackBase({date, extraHours})` devolve a base. Validade/cumulatividade ainda a definir
+- Cashback (decisão do cliente, 2026-10-26): 40% sobre diária + horas adicionais, SEM taxa de limpeza e sem opcionais; vira desconto no próximo evento. `SOPHIA.cashbackBase({date, extraHours})` devolve a base. Validade/cumulatividade ainda a definir
 - Opcionais (telão, rede de futevôlei, piscina aquecida): valor sob consulta, não entram no total
 
 ## Decisões importantes
 - Estética: fundo preto, azul, detalhes metálicos; efeitos discretos; respeita prefers-reduced-motion.
 - Formulário envia o pedido via wa.me (sem back end). Validação: data ≥ hoje e ≤ 2027-12-31, horas extras 0–8, telefone ≥ 10 dígitos, aceite das regras.
 - Lista de feriados cobre só 2026–2027 (`HOLIDAYS_MAX`); estender ao ultrapassar.
-- Nome da marca: "Sophia Festa" (singular, como na logo oficial). Nomes de arquivo, URLs, repositório e chaves de localStorage mantêm "sophia-festas"/"sophia.*".
+- Nome da marca: "Sophia Festas" (plural, definido pelo cliente em 2026-10-26; a logo-referência diz FESTA mas foi corrigida). Nomes de arquivo, URLs, repositório e chaves de localStorage mantêm "sophia-festas"/"sophia.*".
 - Hero usa img/piscina-telao.jpg (a fachada tem o letreiro e conflitava com a logo); a fachada fica na galeria.
 
 ## Bugs conhecidos
@@ -49,7 +47,7 @@ Nenhum bug confirmado. As entregas (landing, correções e contrato.html) foram 
 Não adicionar back end até aprovação da ideia. Fotos reais em img/ (WebP + JPEG de fallback; originais fora do repo). Não acrescentar itens inclusos ou ao termo por causa do que aparece nas fotos.
 
 ## Pendências
-- Número real do WhatsApp (hoje placeholder 5500000000000)
+- WhatsApp real definido: 5521998172874. Endereço: Estrada do Mendanha, 6271. Pendentes: buffet parceiro (nome/valores), preço dos opcionais, back end com contas de admin, fotos reais e contrato de regras (Bruna)
 - Dados do termo marcados "A DEFINIR" em contrato.html: dados da locadora, endereço do imóvel, forma de pagamento/sinal, política de cancelamento, procedimento de danos, regras do cashback, foro
 - Medidas (piscina, área externa), endereço e mapa — marcados "a confirmar" no site
 - Confirmar com a dona se ping-pong e espaço infantil (visíveis na foto da área de jogos) entram nos itens inclusos — hoje a legenda é só "Área de jogos"
