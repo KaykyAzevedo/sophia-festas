@@ -153,8 +153,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .nav-logo { display: flex; align-items: center; gap: .5rem; }
 .nav-logo .logo-mark { height: 46px; width: auto; }
-.nav-logo { min-width: 102px; min-height: 46px; } /* reserva o espaço antes do SVG ser injetado (sem salto de layout) */
-.hero [data-logo="big"] { width: min(680px, 92vw); aspect-ratio: 592 / 318; margin: 0 auto; }
+.nav-logo { min-width: 110px; min-height: 46px; } /* reserva o espaço antes do SVG ser injetado (sem salto de layout) */
+.hero [data-logo="big"] { width: min(680px, calc(100vw - 1.5rem)); aspect-ratio: 592 / 298; margin: 0 auto; }
 .nav-links { display: flex; gap: 1.4rem; list-style: none; align-items: center; }
 .nav-links a {
   font-family: var(--font-display); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
@@ -177,43 +177,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .logo-mark { overflow: visible; }
 .logo-big { width: min(640px, 92vw); height: auto; margin: 0 auto; }
 
-/* ---------- borboleta: bater de asas orgânico (abre devagar, fecha rápido, pausa aberta) ---------- */
-/* solta (de frente): duas asas espelhadas, articuladas junto ao corpo, dobra 3D; asa de trás defasada */
-.butterfly-svg .bf-fore, .butterfly-svg .bf-hind {
-  transform-box: fill-box; --amp: 72;
-  animation: bf-flap var(--bf-dur, 3.6s) infinite;
-}
-.butterfly-svg .bf-hind { --amp: 62; animation-delay: calc(var(--bf-dur, 3.6s) * .05); }
-.butterfly-svg .l { --dir: -1; }
-.butterfly-svg .r { --dir: 1; }
-.butterfly-svg .bf-fore.l { transform-origin: 100% 100%; }
-.butterfly-svg .bf-fore.r { transform-origin: 0 100%; }
-.butterfly-svg .bf-hind.l { transform-origin: 100% 0; }
-.butterfly-svg .bf-hind.r { transform-origin: 0 0; }
-.butterfly-svg .bf-body { transform-box: fill-box; transform-origin: 50% 70%; animation: bf-sway var(--bf-dur, 3.6s) ease-in-out infinite; }
-@keyframes bf-flap {
-  0%   { transform: perspective(340px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
-  16%  { transform: perspective(340px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
-  34%  { transform: perspective(340px) rotateY(calc(var(--dir) * var(--amp) * 1deg)); animation-timing-function: cubic-bezier(.25, .6, .3, 1); }
-  100% { transform: perspective(340px) rotateY(0deg); }
-}
-@keyframes bf-sway {
-  0%, 16%, 100% { transform: rotate(0deg) translateY(0); }
-  34% { transform: rotate(-1.6deg) translateY(1px); }
-  60% { transform: rotate(.8deg) translateY(-.6px); }
-}
-/* da logo (de perfil): asa da frente e asa de trás levemente defasadas */
-.logo-butterfly .pw-fore, .logo-butterfly .pw-hind {
-  transform-box: fill-box; animation: pw-flap var(--pw-dur, 3.8s) infinite;
-}
-.logo-butterfly .pw-fore { transform-origin: 100% 94%; }
-.logo-butterfly .pw-hind { transform-origin: 100% 6%; animation-delay: .16s; }
-@keyframes pw-flap {
-  0%   { transform: perspective(300px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
-  62%  { transform: perspective(300px) rotateY(0deg); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
-  72%  { transform: perspective(300px) rotateY(-58deg); animation-timing-function: cubic-bezier(.25, .6, .3, 1); }
-  100% { transform: perspective(300px) rotateY(0deg); }
-}
+/* ---------- borboleta (imagem recortada da logo): estática, só flutua de leve ---------- */
+.butterfly-svg { width: 100%; height: auto; }
+.mini-fly .butterfly-svg { height: 100%; object-fit: contain; }
+.toast .butterfly-svg { width: 22px; flex: none; }
+.logo-butterfly { transform-box: fill-box; transform-origin: 70% 90%; animation: bf-hover 5s ease-in-out infinite; }
+@keyframes bf-hover { 50% { transform: translateY(-2px) rotate(-1.2deg); } }
 
 /* ---------- hero ---------- */
 .hero {
@@ -470,6 +439,7 @@ footer .foot-quote { font-family: var(--font-serif); font-style: italic; font-si
   .nav-toggle { position: relative; z-index: 30; }
 }
 @media (max-width: 760px) {
+  .hero { padding-left: .75rem; padding-right: .75rem; }
   .check-grid { grid-template-columns: 1fr; }
   .fig-row { grid-template-columns: 1fr; }
   .lb { padding: 3.5rem .6rem 5rem; }
