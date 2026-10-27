@@ -272,16 +272,6 @@ section { padding: clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 3rem); position: rel
 .terms li::before, .check-grid li::before, .rules li::before { content: "✦"; color: var(--blue-soft); font-size: .75rem; margin-top: .3rem; flex: none; }
 .terms strong { color: #fff; font-weight: 500; }
 
-/* buffet parceiro */
-.buffet-sec { background: radial-gradient(900px 500px at 50% 0, rgba(47,123,255,.12), transparent 70%); }
-.buffet-card { max-width: 820px; margin: 3rem auto 0; padding: clamp(2rem, 5vw, 3.5rem) clamp(1.2rem, 5vw, 3rem); display: grid; gap: 1.4rem; justify-items: center; box-shadow: 0 0 60px -20px var(--blue-glow); }
-.buffet-badge { font-family: var(--font-display); font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: #fff; padding: .45rem 1.2rem; border-radius: 999px; background: linear-gradient(135deg, #1648ad, #2f7bff); box-shadow: 0 0 0 1px rgba(185,214,255,.4) inset; }
-.buffet-name { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1.15; }
-.buffet-points { list-style: none; display: grid; gap: .7rem; text-align: left; max-width: 560px; }
-.buffet-points li { display: flex; gap: .7rem; font-size: .95rem; }
-.buffet-points li::before { content: "✦"; color: var(--blue-soft); font-size: .75rem; margin-top: .3rem; flex: none; }
-.buffet-note { color: var(--muted); font-size: .85rem; }
-
 /* incluso, opcionais, eventos, regras */
 .check-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem 2rem; margin: 3rem auto 0; text-align: left; max-width: 980px; }
 .optionals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.5rem; }

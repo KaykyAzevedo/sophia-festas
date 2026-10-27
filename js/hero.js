@@ -22,6 +22,8 @@
     CASHBACK: () => Math.round((S.CASHBACK_PCT || 0) * 100),
     HOURS: () => S.HOURS_INCLUDED,
     INCLUDED: () => (S.INCLUDED || []).length,
+    EXTRA_PCT: () => Math.round((S.EXTRA_HOUR_PCT || 0) * 100),
+    CLEANING: () => S.CLEANING_FEE,
   };
   $$("[data-cfg]").forEach((el) => { const v = CFG[el.dataset.cfg] && CFG[el.dataset.cfg](); if (v != null) el.dataset.to = v; if (v != null) el.textContent = fmtNum(v); });
   function fmtNum(v) { return Math.round(v).toLocaleString("pt-BR"); }

@@ -48,7 +48,7 @@ Nenhum bug confirmado. As entregas (landing, correções e contrato.html) foram 
 Não adicionar back end até aprovação da ideia. Fotos reais em img/ (WebP + JPEG de fallback; originais fora do repo). Não acrescentar itens inclusos ou ao termo por causa do que aparece nas fotos.
 
 ## Pendências
-- WhatsApp real definido: 5521998172874. Endereço: Estrada do Mendanha, 6271. Pendentes: buffet parceiro (nome/valores), preço dos opcionais, back end com contas de admin, fotos reais e contrato de regras (Bruna)
+- WhatsApp real definido: 5521998172874. Endereço: Estrada do Mendanha, 6271. Pendentes: preço dos opcionais, back end com contas de admin, fotos reais e contrato de regras (Bruna)
 - Dados do termo marcados "A DEFINIR" em contrato.html: dados da locadora, endereço do imóvel, forma de pagamento/sinal, política de cancelamento, procedimento de danos, regras do cashback, foro
 - Medidas (piscina, área externa), endereço e mapa — marcados "a confirmar" no site
 - Confirmar com a dona se ping-pong e espaço infantil (visíveis na foto da área de jogos) entram nos itens inclusos — hoje a legenda é só "Área de jogos"

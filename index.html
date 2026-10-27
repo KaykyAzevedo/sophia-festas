@@ -25,7 +25,6 @@
     <ul class="nav-links" id="nav-links">
       <li><a href="#essencia">A casa</a></li>
       <li><a href="#diarias">Diárias</a></li>
-      <li><a href="#buffet">Buffet</a></li>
       <li><a href="#incluso">Incluso</a></li>
       <li><a href="#opcionais">Opcionais</a></li>
       <li><a href="#eventos">Eventos</a></li>
@@ -104,47 +103,75 @@
   </section>
 
   <!-- DIÁRIAS -->
-  <section id="diarias">
+  <section id="diarias" data-host>
     <div class="container center">
       <p class="eyebrow reveal">Diárias</p>
       <h2 class="section-title reveal">Valores <em>transparentes</em></h2>
-      <p class="lead reveal">Diária única, com 8 horas de festa incluídas.</p>
+      <p class="lead reveal">Diária única, com <span data-cfg="HOURS">8</span> horas de festa incluídas.</p>
 
-      <div class="rates single">
-        <div class="rate featured metal-frame reveal">
-          <h3>Diária</h3>
-          <p class="rate-from">a partir de</p>
-          <p class="rate-price metal-blue-text">R$ 950,00</p>
-          <p class="rate-sub">por diária · 8 horas incluídas</p>
+      <div class="price-card metal-frame reveal">
+        <span class="pc-glow" aria-hidden="true"></span>
+        <span class="pc-sheen" aria-hidden="true"></span>
+        <p class="pc-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><b data-cfg="HOURS">8</b> horas incluídas</span></p>
+        <p class="pc-from">Diária · a partir de</p>
+        <p class="pc-price metal-blue-text" aria-label="R$ 950,00"><i>R$</i><span data-count data-cfg="BASE_PRICE">950</span><small>,00</small></p>
+        <p class="pc-sub">por diária</p>
+        <div class="pc-cta">
+          <a href="#contato" class="btn btn-primary" data-magnetic>Simular orçamento</a>
+          <a href="#" class="btn btn-ghost" id="dia-wa" data-magnetic target="_blank" rel="noopener">Falar no WhatsApp</a>
         </div>
       </div>
 
-      <ul class="terms reveal">
-        <li><strong>8 horas de festa</strong> incluídas na diária.</li>
-        <li><strong>Hora adicional:</strong> 10% do valor da diária, mediante disponibilidade.</li>
-        <li><strong>Taxa de limpeza:</strong> R$ 150,00, cobrada à parte.</li>
-        <li><strong>Cashback:</strong> 40% do valor da diária (sem a taxa de limpeza) como desconto no seu próximo evento.</li>
-      </ul>
-    </div>
-  </section>
+      <div class="price-grid">
+        <div class="pg-card reveal" style="--i:0"><div class="pg-in">
+          <span class="pg-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3><span data-cfg="HOURS">8</span> horas de festa</h3>
+          <p>incluídas na diária.</p>
+        </div></div>
+        <div class="pg-card reveal" style="--i:1"><div class="pg-in">
+          <span class="pg-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12M6 21h12M7 3c0 5 5 6 5 9s-5 4-5 9M17 3c0 5-5 6-5 9s5 4 5 9"/></svg></span>
+          <h3>Hora adicional</h3>
+          <p><span data-cfg="EXTRA_PCT">10</span>% do valor da diária, mediante disponibilidade.</p>
+        </div></div>
+        <div class="pg-card reveal" style="--i:2"><div class="pg-in">
+          <span class="pg-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8zM19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>
+          <h3>Taxa de limpeza</h3>
+          <p>R$ <span data-cfg="CLEANING">150</span>,00, cobrada à parte.</p>
+        </div></div>
+      </div>
 
-  <!-- BUFFET PARCEIRO -->
-  <section id="buffet" class="buffet-sec">
-    <div class="container center">
-      <p class="eyebrow reveal">Parceria exclusiva</p>
-      <h2 class="section-title reveal">Buffet <em>parceiro</em></h2>
-      <p class="lead reveal">A Sophia Festas tem um buffet parceiro para você fechar a casa e a comida no mesmo lugar, sem dor de cabeça.</p>
+      <div class="dia-block">
+        <p class="eyebrow reveal">Na prática</p>
+        <h3 class="dia-h reveal">Exemplo de como fica <em>o valor</em></h3>
+        <div class="calc reveal" id="dia-calc" role="group" aria-label="Exemplo de cálculo do valor"></div>
+        <p class="dia-note reveal">Exemplo com 1 hora adicional (sujeita à disponibilidade). O valor final é confirmado pelo WhatsApp.</p>
+        <a href="#contato" class="btn btn-primary reveal" data-magnetic>Simular meu orçamento</a>
+      </div>
 
-      <div class="buffet-card metal-frame reveal">
-        <div class="buffet-badge">Parceiro oficial</div>
-        <h3 class="buffet-name"><span class="tbc">TBD — nome do buffet parceiro</span></h3>
-        <ul class="buffet-points">
-          <li>Cardápio e montagem combinados para o espaço da casa <span class="tbc">TBD</span></li>
-          <li>Condições especiais para quem aluga com a Sophia Festas <span class="tbc">TBD</span></li>
-          <li>Valores do buffet: <span class="tbc">TBD — sob consulta</span></li>
-        </ul>
-        <p class="buffet-note">Contratar o buffet é opcional: a casa continua disponível só como espaço.</p>
-        <a class="btn btn-primary" id="buffet-cta" href="#" target="_blank" rel="noopener">Falar sobre o buffet no WhatsApp</a>
+      <div class="dia-block">
+        <p class="eyebrow reveal">Já na diária</p>
+        <h3 class="dia-h reveal">O que já está <em>incluso</em></h3>
+        <ul class="dia-chips reveal" id="dia-chips"></ul>
+      </div>
+
+      <div class="dia-block">
+        <p class="eyebrow reveal">Passo a passo</p>
+        <h3 class="dia-h reveal">Como <em>funciona</em></h3>
+        <ol class="steps reveal">
+          <li style="--i:0"><span class="st-n">1</span><h4>Simule o orçamento</h4><p>Escolha a data e veja a estimativa aqui no site.</p></li>
+          <li style="--i:1"><span class="st-n">2</span><h4>Fale com a gente</h4><p>O pedido vai pronto para o nosso WhatsApp, onde confirmamos a disponibilidade.</p></li>
+          <li style="--i:2"><span class="st-n">3</span><h4>Aceite o termo online</h4><p>Leia o <a class="inline-link" href="contrato.html">termo de locação</a> e assine pelo site.</p></li>
+          <li style="--i:3"><span class="st-n">4</span><h4>Aproveite a casa</h4><p>8 horas de casa inteira para você e seus convidados.</p></li>
+        </ol>
+      </div>
+
+      <div class="dia-cta metal-frame reveal">
+        <h3>Pronto para reservar a <em>sua data</em>?</h3>
+        <p>Simule o valor e confirme a disponibilidade pelo WhatsApp.</p>
+        <div class="pc-cta">
+          <a href="#contato" class="btn btn-primary" data-magnetic>Simular orçamento</a>
+          <a href="#" class="btn btn-ghost" id="dia-wa2" data-magnetic target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
@@ -179,7 +206,12 @@
     <div class="container center">
       <p class="eyebrow reveal">Eventos</p>
       <h2 class="section-title reveal">Para todo tipo de <em>ocasião</em></h2>
-      <ul class="chips reveal" id="events-list"></ul>
+      <p class="lead reveal">Toque em um card para ver como a estrutura da casa se encaixa e já escolher o tipo de evento no orçamento.</p>
+      <div class="ev-tabs reveal" id="ev-tabs" role="tablist" aria-label="Filtrar por categoria"></div>
+      <div class="ev-grid" id="ev-grid"></div>
+      <div class="ev-cta reveal">
+        <a href="#contato" class="btn btn-primary" data-magnetic>Simular orçamento para o meu evento</a>
+      </div>
     </div>
   </section>
 
@@ -277,6 +309,7 @@
   <script src="js/brand.js"></script>
   <script src="js/magic.js"></script>
   <script src="js/hero.js"></script>
+  <script src="js/eventos.js"></script>
   <script>
     (function () {
       const S = window.SOPHIA;
@@ -288,17 +321,27 @@
 
       // Listas vindas do config (fonte única)
       $("included-list").innerHTML = S.INCLUDED.map((t) => "<li>" + esc(t) + "</li>").join("");
-      $("events-list").innerHTML = S.EVENT_TYPES.filter((t) => t !== "Outro").map((t) => "<li>" + esc(t) + "</li>").join("");
       $("rules-list").innerHTML = S.RULES.map((t) => "<li>" + esc(t) + "</li>").join("");
       $("optionals-list").innerHTML = S.OPTIONALS.map((o) =>
         '<div class="opt-card metal-frame"><h3>' + esc(o.label) + "</h3><p>Valor sob consulta</p></div>").join("");
+      // Diárias: exemplo de valor e itens incluídos (tudo vindo do config)
+      const ex = S.quote({ extraHours: 1 });
+      const calcItem = (label, val, sub) => '<div class="calc-item"><span>' + label + "</span><b>" + brl(val) + "</b>" + (sub ? "<small>" + sub + "</small>" : "") + "</div>";
+      $("dia-calc").innerHTML = calcItem("Diária", ex.rate, S.HOURS_INCLUDED + " horas") + '<span class="calc-op" aria-hidden="true">+</span>' +
+        calcItem("1 hora adicional", ex.extra, Math.round(S.EXTRA_HOUR_PCT * 100) + "% da diária") + '<span class="calc-op" aria-hidden="true">+</span>' +
+        calcItem("Taxa de limpeza", ex.cleaning, "à parte") + '<span class="calc-op" aria-hidden="true">=</span>' +
+        '<div class="calc-item total"><span>Total estimado</span><b>' + brl(ex.total) + "</b></div>";
+      const HIGHLIGHTS = ["Piscina grande", "Churrasqueira", "Sistema de som JBL", "Área para decoração de festa", "Totó (pebolim)", "Sinuca", "Wi-Fi", "Monitoramento por câmeras"].filter((n) => S.INCLUDED.indexOf(n) !== -1);
+      $("dia-chips").innerHTML = HIGHLIGHTS.map((t, i) => '<li style="--i:' + i + '">' + esc(t) + "</li>").join("") +
+        '<li class="more" style="--i:' + HIGHLIGHTS.length + '"><a href="#incluso">Ver tudo (' + S.INCLUDED.length + " itens)</a></li>";
+      $("dia-wa2").href = waLink("Olá! Vim pelo site da Sophia Festas e gostaria de reservar a casa.");
       $("q-type").innerHTML = S.EVENT_TYPES.map((t) => "<option>" + esc(t) + "</option>").join("");
       $("q-opts").innerHTML = S.OPTIONALS.map((o) =>
         '<label class="check-line"><input type="checkbox" name="opt" value="' + esc(o.id) + '"> <span>' + esc(o.label) + "</span></label>").join("");
 
-      // Endereço e buffet
+      // Endereço
       $("info-addr").textContent = S.ADDRESS;
-      $("buffet-cta").href = waLink("Olá! Vim pelo site da Sophia Festas e gostaria de saber sobre o buffet parceiro.");
+      $("dia-wa").href = waLink("Olá! Vim pelo site da Sophia Festas e gostaria de saber mais sobre as diárias.");
 
       // WhatsApp: balão e contato
       $("wa-float").href = waLink("Olá! Vim pelo site da Sophia Festas e gostaria de saber mais sobre o aluguel da casa.");
